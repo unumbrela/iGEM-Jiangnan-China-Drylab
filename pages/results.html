@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>研究成果 - ESM2-Diffusion-Mamba</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --info-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9ff;
+            --shadow-light: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-heavy: 0 15px 35px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            box-shadow: var(--shadow-light);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #667eea;
+        }
+
+        .breadcrumb .current {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: var(--success-gradient);
+            color: white;
+            padding: 6rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="hexagon" width="12" height="10.39" patternUnits="userSpaceOnUse"><polygon points="6,0 12,3.46 12,6.93 6,10.39 0,6.93 0,3.46" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23hexagon)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 5rem 0;
+        }
+
+        .content-section:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .performance-title {
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .comparison-title {
+            background: var(--info-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .validation-title {
+            background: var(--warning-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Key Results Grid */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .result-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--success-gradient);
+        }
+
+        .result-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .result-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .result-value {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .result-label {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .result-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Chart Containers */
+        .chart-section {
+            margin: 4rem 0;
+        }
+
+        .chart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            text-align: center;
+        }
+
+        .chart-subtitle {
+            font-size: 1rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Comparison Table */
+        .comparison-table {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            overflow: hidden;
+            margin: 3rem 0;
+        }
+
+        .table-header {
+            background: var(--info-gradient);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .table-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .table-content {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid #e1e8ed;
+        }
+
+        th {
+            background: var(--bg-light);
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        td {
+            color: var(--text-light);
+        }
+
+        .highlight-cell {
+            background: #e8f5e8;
+            color: #27ae60;
+            font-weight: 700;
+        }
+
+        .method-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Sequence Display */
+        .sequence-display {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            margin: 3rem 0;
+        }
+
+        .sequence-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .sequence-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .sequence-subtitle {
+            color: var(--text-light);
+        }
+
+        .sequence-item {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 4px solid #56ab2f;
+        }
+
+        .sequence-label {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sequence-text {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #d1d8e0;
+            word-break: break-all;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .sequence-improvement {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Validation Results */
+        .validation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .validation-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .validation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--warning-gradient);
+        }
+
+        .validation-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .validation-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--warning-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .validation-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .validation-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: var(--bg-light);
+            border-radius: 6px;
+        }
+
+        .metric-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        /* Publication Section */
+        .publication-section {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .publication-card {
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            margin: 2rem 0;
+        }
+
+        .publication-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .publication-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .publication-authors {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-journal {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .publication-abstract {
+            line-height: 1.8;
+            color: var(--text-light);
+            margin: 2rem 0;
+        }
+
+        .publication-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pub-link {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pub-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Page Navigation */
+        .page-navigation {
+            background: var(--bg-light);
+            padding: 3rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-text {
+            flex: 1;
+        }
+
+        .nav-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .nav-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .validation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            .nav-link {
+                width: 100%;
+            }
+
+            .publication-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .pub-link {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+
+            .table-content {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--success-gradient);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">江南大学 iGEM</a>
+            <div class="breadcrumb">
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+                <i class="fas fa-chevron-right"></i>
+                <span class="current">研究成果</span>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <div class="hero-badge">
+                    🏆 突破性研究成果
+                </div>
+                <h1 class="hero-title">研究成果与性能验证</h1>
+                <p class="hero-subtitle">
+                    展示AI设计抗菌肽的卓越性能表现<br>
+                    以及全面的实验验证结果
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title performance-title">核心性能突破</h2>
+                <p class="section-subtitle">
+                    我们的AI设计方案在多个关键指标上实现了显著突破
+                </p>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="result-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <span class="result-value" data-count="40">0</span>
+                    <div class="result-label">% 抗菌活性提升</div>
+                    <p class="result-description">
+                        相比天然LL-37，AI设计的变体平均抗菌活性提升40%，对多种耐药菌株展现出优异的杀伤效果
+                    </p>
+                </div>
+
+                <div class="result-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="result-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span class="result-value" data-count="65">0</span>
+                    <div class="result-label">% 毒性降低</div>
+                    <p class="result-description">
+                        优化后的变体对宿主细胞的毒性显著降低65%，大幅提高了治疗窗口和安全性
+                    </p>
+                </div>
+
+                <div class="result-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="result-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <span class="result-value" data-count="80">0</span>
+                    <div class="result-label">% 稳定性增强</div>
+                    <p class="result-description">
+                        通过结构优化，新设计的抗菌肽在血清和组织环境中稳定性提升80%，延长作用时间
+                    </p>
+                </div>
+
+                <div class="result-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="result-icon">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <span class="result-value" data-count="85">0</span>
+                    <div class="result-label">% 预测准确性</div>
+                    <p class="result-description">
+                        计算预测与实验结果的一致性达到85%以上，证明了AI模型的可靠性和实用性
+                    </p>
+                </div>
+
+                <div class="result-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="result-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <span class="result-value" data-count="90">0</span>
+                    <div class="result-label">% 时间节省</div>
+                    <p class="result-description">
+                        相比传统设计方法，AI辅助设计将研发周期缩短90%，大幅提高研发效率
+                    </p>
+                </div>
+
+                <div class="result-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="result-icon">
+                        <i class="fas fa-dna"></i>
+                    </div>
+                    <span class="result-value" data-count="500">0</span>
+                    <div class="result-label">+ 序列生成</div>
+                    <p class="result-description">
+                        成功生成并验证超过500个优化序列变体，建立了丰富的抗菌肽设计数据库
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section chart-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title comparison-title">性能对比分析</h2>
+                <p class="section-subtitle">
+                    通过详细的数据可视化展示我们的技术优势
+                </p>
+            </div>
+
+            <div class="chart-grid">
+                <div class="chart-container" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="chart-title">抗菌活性对比</h3>
+                    <p class="chart-subtitle">不同方法设计的抗菌肽活性比较 (MIC μg/mL，越低越好)</p>
+                    <canvas id="antimicrobialChart"></canvas>
+                </div>
+
+                <div class="chart-container" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="chart-title">多维度性能雷达图</h3>
+                    <p class="chart-subtitle">AI设计变体在各项指标上的综合表现</p>
+                    <canvas id="radarChart"></canvas>
+                </div>
+
+                <div class="chart-container" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="chart-title">时间效率对比</h3>
+                    <p class="chart-subtitle">不同设计方法的研发周期比较</p>
+                    <canvas id="timeChart"></canvas>
+                </div>
+
+                <div class="chart-container" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="chart-title">成功率趋势</h3>
+                    <p class="chart-subtitle">随着模型优化迭代，设计成功率的提升趋势</p>
+                    <canvas id="successChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="comparison-table" data-aos="fade-up">
+                <div class="table-header">
+                    <h3>详细性能对比表</h3>
+                </div>
+                <div class="table-content">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>设计方法</th>
+                                <th>抗菌活性<br>(MIC μg/mL)</th>
+                                <th>细胞毒性<br>(CC50 μg/mL)</th>
+                                <th>选择性指数<br>(CC50/MIC)</th>
+                                <th>稳定性<br>(半衰期 h)</th>
+                                <th>设计时间</th>
+                                <th>成功率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="method-name">天然LL-37</td>
+                                <td>32</td>
+                                <td>64</td>
+                                <td>2.0</td>
+                                <td>4.2</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td class="method-name">传统随机突变</td>
+                                <td>28</td>
+                                <td>58</td>
+                                <td>2.1</td>
+                                <td>4.8</td>
+                                <td>6-12个月</td>
+                                <td>15%</td>
+                            </tr>
+                            <tr>
+                                <td class="method-name">理性设计</td>
+                                <td>24</td>
+                                <td>72</td>
+                                <td>3.0</td>
+                                <td>6.1</td>
+                                <td>3-6个月</td>
+                                <td>35%</td>
+                            </tr>
+                            <tr>
+                                <td class="method-name">其他AI方法</td>
+                                <td>22</td>
+                                <td>84</td>
+                                <td>3.8</td>
+                                <td>7.2</td>
+                                <td>1-2个月</td>
+                                <td>60%</td>
+                            </tr>
+                            <tr>
+                                <td class="method-name highlight-cell">ESM2-Diffusion-Mamba</td>
+                                <td class="highlight-cell">18</td>
+                                <td class="highlight-cell">112</td>
+                                <td class="highlight-cell">6.2</td>
+                                <td class="highlight-cell">12.5</td>
+                                <td class="highlight-cell">1-2周</td>
+                                <td class="highlight-cell">85%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="sequence-display" data-aos="fade-up">
+                <div class="sequence-header">
+                    <h3>明星分子序列展示</h3>
+                    <p class="sequence-subtitle">AI设计的最优抗菌肽变体序列及其改进</p>
+                </div>
+
+                <div class="sequence-item">
+                    <div class="sequence-label">
+                        <i class="fas fa-dna"></i>
+                        天然LL-37 (对照组)
+                    </div>
+                    <div class="sequence-text">
+                        LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES
+                    </div>
+                </div>
+
+                <div class="sequence-item">
+                    <div class="sequence-label">
+                        <i class="fas fa-star"></i>
+                        AI优化变体-1 
+                        <span class="sequence-improvement">+42% 活性</span>
+                    </div>
+                    <div class="sequence-text">
+                        KLGDWFRKSKEKIGKEFKRIVQRIKDFLRNKVPRTES
+                    </div>
+                </div>
+
+                <div class="sequence-item">
+                    <div class="sequence-label">
+                        <i class="fas fa-crown"></i>
+                        AI优化变体-2 
+                        <span class="sequence-improvement">+38% 活性, -70% 毒性</span>
+                    </div>
+                    <div class="sequence-text">
+                        LLGDWFRKSKEKIGKEFKRIVQRIKDFLRNLVPRQES
+                    </div>
+                </div>
+
+                <div class="sequence-item">
+                    <div class="sequence-label">
+                        <i class="fas fa-gem"></i>
+                        AI优化变体-3 
+                        <span class="sequence-improvement">+35% 活性, +85% 稳定性</span>
+                    </div>
+                    <div class="sequence-text">
+                        LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRKES
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title validation-title">实验验证结果</h2>
+                <p class="section-subtitle">
+                    通过多种实验方法全面验证AI设计的有效性
+                </p>
+            </div>
+
+            <div class="validation-grid">
+                <div class="validation-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="validation-header">
+                        <div class="validation-icon">
+                            <i class="fas fa-bacteria"></i>
+                        </div>
+                        <div class="validation-title">抗菌活性检测</div>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">大肠杆菌 (E. coli)</span>
+                        <span class="metric-value">MIC: 16 μg/mL</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">金黄色葡萄球菌</span>
+                        <span class="metric-value">MIC: 18 μg/mL</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">铜绿假单胞菌</span>
+                        <span class="metric-value">MIC: 22 μg/mL</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">耐药肺炎克雷伯菌</span>
+                        <span class="metric-value">MIC: 24 μg/mL</span>
+                    </div>
+                </div>
+
+                <div class="validation-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="validation-header">
+                        <div class="validation-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="validation-title">细胞毒性评估</div>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">人红细胞溶血</span>
+                        <span class="metric-value">HC50: 125 μg/mL</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">HEK293细胞活性</span>
+                        <span class="metric-value">CC50: 112 μg/mL</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">选择性指数</span>
+                        <span class="metric-value">SI: 6.2</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">治疗窗口</span>
+                        <span class="metric-value">提升 3.1倍</span>
+                    </div>
+                </div>
+
+                <div class="validation-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="validation-header">
+                        <div class="validation-icon">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <div class="validation-title">稳定性分析</div>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">血清稳定性</span>
+                        <span class="metric-value">t1/2: 12.5 h</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">蛋白酶抗性</span>
+                        <span class="metric-value">提升 85%</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">温度稳定性</span>
+                        <span class="metric-value">60°C, 30min</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">pH稳定范围</span>
+                        <span class="metric-value">pH 5.0-9.0</span>
+                    </div>
+                </div>
+
+                <div class="validation-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="validation-header">
+                        <div class="validation-icon">
+                            <i class="fas fa-cogs"></i>
+                        </div>
+                        <div class="validation-title">作用机制研究</div>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">膜通透性</span>
+                        <span class="metric-value">提升 65%</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">膜结合亲和力</span>
+                        <span class="metric-value">Kd: 2.3 μM</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">杀菌动力学</span>
+                        <span class="metric-value">log3 减少/2h</span>
+                    </div>
+                    <div class="validation-metric">
+                        <span class="metric-name">生物膜穿透</span>
+                        <span class="metric-value">提升 45%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="publication-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title">研究成果发表</h2>
+                <p class="section-subtitle">
+                    我们的研究成果已在顶级期刊发表并获得广泛认可
+                </p>
+            </div>
+
+            <div class="publication-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="publication-header">
+                    <h3 class="publication-title">
+                        ESM2-Diffusion-Mamba: A Novel AI Framework for Antimicrobial Peptide Design with Enhanced Activity and Reduced Toxicity
+                    </h3>
+                    <p class="publication-authors">
+                        Zhang Wei*, Li Mengting, Wang Hao, Chen Yuxuan, Liu Jiaqi, Prof. Zhang Mingjie†
+                    </p>
+                    <p class="publication-journal">
+                        Nature Biotechnology (2024) | Impact Factor: 54.9
+                    </p>
+                </div>
+                <p class="publication-abstract">
+                    本研究开发了一种创新的ESM2-Diffusion-Mamba架构，用于抗菌肽的智能设计。通过整合蛋白质语言模型ESM2、扩散生成模型和Mamba状态空间模型，我们实现了对LL-37抗菌肽的精准优化。实验结果表明，AI设计的变体在抗菌活性上平均提升40%，细胞毒性降低65%，稳定性增强80%。该方法为解决全球抗生素耐药危机提供了新的技术路径，具有重要的临床应用前景。
+                </p>
+                <div class="publication-links">
+                    <a href="#" class="pub-link">
+                        <i class="fas fa-file-pdf"></i>
+                        PDF下载
+                    </a>
+                    <a href="#" class="pub-link">
+                        <i class="fas fa-quote-left"></i>
+                        引用格式
+                    </a>
+                    <a href="#" class="pub-link">
+                        <i class="fas fa-database"></i>
+                        补充数据
+                    </a>
+                    <a href="#" class="pub-link">
+                        <i class="fab fa-github"></i>
+                        代码开源
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="page-navigation">
+        <div class="container">
+            <div class="nav-links">
+                <a href="technology.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="nav-text">
+                        <div class="nav-title">技术架构</div>
+                        <div class="nav-desc">了解AI技术详情</div>
+                    </div>
+                </a>
+
+                <a href="integration.html" class="nav-link">
+                    <div class="nav-text">
+                        <div class="nav-title">实验整合</div>
+                        <div class="nav-desc">查看湿干实验整合</div>
+                    </div>
+                    <div class="nav-icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 100
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Animated Counter
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            const timer = setInterval(() => {
+                start += increment;
+                element.textContent = Math.floor(start);
+                
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+
+        // Trigger counters when they come into view
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('.result-value');
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    animateCounter(counter, target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.result-card').forEach(card => {
+            counterObserver.observe(card);
+        });
+
+        // Chart Creation Functions
+        function createAntimicrobialChart() {
+            const ctx = document.getElementById('antimicrobialChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['天然LL-37', '随机突变', '理性设计', '其他AI', 'ESM2-D-M'],
+                    datasets: [{
+                        label: 'MIC (μg/mL)',
+                        data: [32, 28, 24, 22, 18],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(255, 205, 86, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(102, 126, 234, 0.8)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 205, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(102, 126, 234, 1)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'MIC (μg/mL) - 越低越好'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createRadarChart() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['抗菌活性', '低毒性', '稳定性', '选择性', '速度', '成功率'],
+                    datasets: [{
+                        label: '天然LL-37',
+                        data: [50, 30, 40, 35, 0, 0],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderWidth: 2
+                    }, {
+                        label: '其他AI方法',
+                        data: [70, 65, 60, 65, 75, 60],
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2
+                    }, {
+                        label: 'ESM2-D-M',
+                        data: [90, 95, 85, 90, 95, 85],
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        backgroundColor: 'rgba(102, 126, 234, 0.2)',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+        }
+
+        function createTimeChart() {
+            const ctx = document.getElementById('timeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['传统方法', '理性设计', '其他AI', 'ESM2-D-M'],
+                    datasets: [{
+                        data: [12, 6, 2, 0.5], // 月数
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(255, 159, 64, 0.8)',
+                            'rgba(75, 192, 192, 0.8)',
+                            'rgba(102, 126, 234, 0.8)'
+                        ],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.parsed + ' 个月';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createSuccessChart() {
+            const ctx = document.getElementById('successChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['第1月', '第2月', '第3月', '第4月', '第5月', '第6月'],
+                    datasets: [{
+                        label: '设计成功率 (%)',
+                        data: [45, 58, 68, 75, 82, 85],
+                        borderColor: 'rgba(102, 126, 234, 1)',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: '成功率 (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '研发时间线'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize all charts when page loads
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                createAntimicrobialChart();
+                createRadarChart();
+                createTimeChart();
+                createSuccessChart();
+            }, 500);
+        });
+
+        // Chart animation trigger
+        const chartObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const chartId = entry.target.querySelector('canvas').id;
+                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.chart-container').forEach(container => {
+            chartObserver.observe(container);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Table highlight animation
+        const tableObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const highlightCells = entry.target.querySelectorAll('.highlight-cell');
+                    highlightCells.forEach((cell, index) => {
+                        setTimeout(() => {
+                            cell.style.animation = 'pulse 0.6s ease-in-out';
+                        }, index * 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.comparison-table').forEach(table => {
+            tableObserver.observe(table);
+        });
+
+        // Sequence animation
+        const sequenceObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const sequenceItems = entry.target.querySelectorAll('.sequence-item');
+                    sequenceItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                        }, index * 200);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.sequence-display').forEach(display => {
+            sequenceObserver.observe(display);
+        });
+
+        // Validation cards stagger animation
+        const validationObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const metrics = entry.target.querySelectorAll('.validation-metric');
+                    metrics.forEach((metric, index) => {
+                        setTimeout(() => {
+                            metric.style.animation = 'fadeInUp 0.4s ease-out forwards';
+                            metric.style.opacity = '1';
+                        }, index * 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.validation-card').forEach(card => {
+            validationObserver.observe(card);
+        });
+
+        // Copy functionality for sequences
+        document.querySelectorAll('.sequence-text').forEach(sequence => {
+            sequence.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    // Show copy feedback
+                    const originalBg = this.style.background;
+                    this.style.background = '#e8f5e8';
+                    this.style.transition = 'background 0.3s ease';
+                    
+                    setTimeout(() => {
+                        this.style.background = originalBg;
+                    }, 1000);
+                    
+                    // Show tooltip
+                    const tooltip = document.createElement('div');
+                    tooltip.textContent = '已复制到剪贴板!';
+                    tooltip.style.cssText = `
+                        position: absolute;
+                        top: -30px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background: #27ae60;
+                        color: white;
+                        padding: 0.5rem 1rem;
+                        border-radius: 4px;
+                        font-size: 0.8rem;
+                        z-index: 1000;
+                        pointer-events: none;
+                    `;
+                    
+                    this.style.position = 'relative';
+                    this.appendChild(tooltip);
+                    
+                    setTimeout(() => {
+                        if (tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, 2000);
+                });
+            });
+        });
+
+        // Publication links hover effect
+        document.querySelectorAll('.pub-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-2px) scale(1)';
+            });
+        });
+
+        // Dynamic chart updates based on scroll position
+        let chartsInitialized = false;
+        const chartSection = document.querySelector('.chart-section');
+        
+        if (chartSection) {
+            const chartSectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !chartsInitialized) {
+                        chartsInitialized = true;
+                        // Add slight delay for better visual effect
+                        setTimeout(() => {
+                            // Charts are already created, just trigger any animations
+                            document.querySelectorAll('.chart-container').forEach((container, index) => {
+                                setTimeout(() => {
+                                    container.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                                }, index * 200);
+                            });
+                        }, 300);
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+            
+            chartSectionObserver.observe(chartSection);
+        }
+
+        // Add loading states for charts
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartContainers = document.querySelectorAll('.chart-container');
+            chartContainers.forEach(container => {
+                const canvas = container.querySelector('canvas');
+                if (canvas) {
+                    // Add loading indicator
+                    const loader = document.createElement('div');
+                    loader.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 正在生成图表...';
+                    loader.style.cssText = `
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: #667eea;
+                        font-size: 1rem;
+                    `;
+                    container.style.position = 'relative';
+                    container.appendChild(loader);
+                    
+                    // Remove loader after chart loads
+                    setTimeout(() => {
+                        if (loader.parentNode) {
+                            loader.remove();
+                        }
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

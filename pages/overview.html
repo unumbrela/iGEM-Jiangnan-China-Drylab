@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目概览 - ESM2-Diffusion-Mamba</title>
+    
+    <!-- External Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --danger-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            --success-gradient: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            --warning-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9ff;
+            --shadow-light: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-heavy: 0 15px 35px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            box-shadow: var(--shadow-light);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #667eea;
+        }
+
+        .breadcrumb .current {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: var(--danger-gradient);
+            color: white;
+            padding: 6rem 0 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="10" height="10" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Crisis Section */
+        .crisis-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .crisis-title {
+            background: var(--danger-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            text-align: center;
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Statistics Grid */
+        .crisis-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--danger-gradient);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--danger-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--danger-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* Timeline */
+        .timeline-section {
+            padding: 5rem 0;
+            background: var(--bg-light);
+        }
+
+        .timeline-title {
+            background: var(--warning-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 4rem auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--warning-gradient);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 3rem 0;
+            width: 50%;
+            padding: 0 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border: 10px solid transparent;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+            border-left-color: white;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+            border-right-color: white;
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--warning-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-event {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-description {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border: 4px solid #f093fb;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px white;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .solution-title {
+            background: var(--success-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin: 4rem 0;
+        }
+
+        .solution-card {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--success-gradient);
+        }
+
+        .solution-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .solution-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--success-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .solution-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .solution-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-features {
+            list-style: none;
+        }
+
+        .solution-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-light);
+        }
+
+        .solution-features li i {
+            color: #27ae60;
+            font-size: 0.9rem;
+        }
+
+        /* Innovation Section */
+        .innovation-section {
+            padding: 5rem 0;
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        .innovation-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .innovation-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 2rem;
+        }
+
+        .innovation-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 3rem;
+        }
+
+        .innovation-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .highlight-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .highlight-number {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .highlight-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 4rem 0;
+            background: white;
+            text-align: center;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-dark);
+            border: 2px solid var(--text-light);
+        }
+
+        .btn-outline:hover {
+            background: var(--text-dark);
+            color: white;
+            border-color: var(--text-dark);
+            transform: translateY(-3px);
+        }
+
+        /* Page Navigation */
+        .page-navigation {
+            background: var(--bg-light);
+            padding: 3rem 0;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            min-width: 200px;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .nav-text {
+            flex: 1;
+        }
+
+        .nav-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .nav-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .crisis-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .solution-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+                padding-left: 4rem;
+            }
+
+            .timeline-content::before {
+                left: -20px !important;
+                right: auto !important;
+                border-right-color: white !important;
+                border-left-color: transparent !important;
+            }
+
+            .timeline-dot {
+                left: 12px !important;
+                right: auto !important;
+            }
+
+            .innovation-highlights {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            .nav-link {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .innovation-highlights {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-count {
+            animation: countUp 0.6s ease-out forwards;
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--danger-gradient);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">江南大学 iGEM</a>
+            <div class="breadcrumb">
+                <a href="../index.html">
+                    <i class="fas fa-home"></i> 首页
+                </a>
+                <i class="fas fa-chevron-right"></i>
+                <span class="current">项目概览</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <div class="hero-badge">
+                    🚨 全球健康危机警报
+                </div>
+                <h1 class="hero-title">抗生素耐药性危机</h1>
+                <p class="hero-subtitle">
+                    了解全球面临的重大健康威胁<br>
+                    以及我们如何通过AI技术提供创新解决方案
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crisis Statistics -->
+    <section class="crisis-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title crisis-title">触目惊心的现实数据</h2>
+                <p class="section-subtitle">
+                    抗生素耐药性正在成为21世纪最严重的公共健康威胁之一
+                </p>
+            </div>
+
+            <div class="crisis-stats">
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-icon">
+                        <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                    <span class="stat-number" data-count="700">0</span>
+                    <div class="stat-label">万人</div>
+                    <p class="stat-description">
+                        每年因抗生素耐药性导致的全球死亡人数，这个数字还在持续上升
+                    </p>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <span class="stat-number" data-count="1000">0</span>
+                    <div class="stat-label">万人</div>
+                    <p class="stat-description">
+                        预计到2050年，每年死亡人数将达到1000万，超过癌症死亡总数
+                    </p>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <span class="stat-number" data-count="100">0</span>
+                    <div class="stat-label">万亿美元</div>
+                    <p class="stat-description">
+                        到2050年，抗生素耐药性将给全球经济造成的累计损失
+                    </p>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-icon">
+                        <i class="fas fa-virus"></i>
+                    </div>
+                    <span class="stat-number" data-count="70">0</span>
+                    <div class="stat-label">%</div>
+                    <p class="stat-description">
+                        常见病原菌中已出现耐药性的比例，一些细菌甚至对所有抗生素耐药
+                    </p>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="stat-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <span class="stat-number" data-count="30">0</span>
+                    <div class="stat-label">年</div>
+                    <p class="stat-description">
+                        自1987年以来，几乎没有新的抗生素类别被发现并投入临床使用
+                    </p>
+                </div>
+
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="stat-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <span class="stat-number" data-count="50">0</span>
+                    <div class="stat-label">%</div>
+                    <p class="stat-description">
+                        医院内感染中，由耐药菌引起的感染比例持续攀升
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title timeline-title">耐药性发展历程</h2>
+                <p class="section-subtitle">
+                    从抗生素的黄金时代到耐药性危机的演变过程
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1928</div>
+                        <div class="timeline-event">青霉素发现</div>
+                        <p class="timeline-description">
+                            亚历山大·弗莱明发现青霉素，开启了抗生素时代，拯救了数百万生命
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1940s</div>
+                        <div class="timeline-event">抗生素黄金时代</div>
+                        <p class="timeline-description">
+                            链霉素、氯霉素、四环素等多种抗生素相继发现，感染性疾病死亡率大幅下降
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1950s</div>
+                        <div class="timeline-event">首次耐药性报告</div>
+                        <p class="timeline-description">
+                            青霉素耐药金黄色葡萄球菌出现，预示着细菌反击的开始
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">1980s</div>
+                        <div class="timeline-event">MRSA爆发</div>
+                        <p class="timeline-description">
+                            甲氧西林耐药金黄色葡萄球菌(MRSA)在全球医院内广泛传播
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2000s</div>
+                        <div class="timeline-event">超级细菌出现</div>
+                        <p class="timeline-description">
+                            NDM-1、KPC等超级细菌出现，对几乎所有抗生素都耐药
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-event">AI助力突破</div>
+                        <p class="timeline-description">
+                            江南大学iGEM团队开发ESM2-Diffusion-Mamba，为抗菌肽设计带来新希望
+                        </p>
+                    </div>
+                    <div class="timeline-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Overview -->
+    <section class="solution-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title solution-title">我们的解决方案</h2>
+                <p class="section-subtitle">
+                    通过AI技术革新抗菌肽设计，为耐药性危机提供创新解决方案
+                </p>
+            </div>
+
+            <div class="solution-grid">
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="solution-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>精准问题定位</h3>
+                    <p>
+                        传统抗生素面临耐药性挑战，而天然抗菌肽LL-37虽有广谱抗菌活性，但存在细胞毒性高、稳定性差等问题，限制了临床应用。
+                    </p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check"></i> 识别传统抗生素局限性</li>
+                        <li><i class="fas fa-check"></i> 分析LL-37抗菌肽缺陷</li>
+                        <li><i class="fas fa-check"></i> 明确优化设计目标</li>
+                        <li><i class="fas fa-check"></i> 确立创新研究方向</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="solution-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI驱动创新</h3>
+                    <p>
+                        开发ESM2-Diffusion-Mamba架构，整合蛋白质语言模型、扩散生成和状态空间模型，实现从序列理解到智能优化的全流程自动化设计。
+                    </p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check"></i> ESM2深度序列理解</li>
+                        <li><i class="fas fa-check"></i> Diffusion结构优化生成</li>
+                        <li><i class="fas fa-check"></i> Mamba智能序列解码</li>
+                        <li><i class="fas fa-check"></i> 端到端协同优化</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="solution-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>湿干实验整合</h3>
+                    <p>
+                        建立完整的DBTL循环，将AI设计与酿酒酵母表达系统结合，通过实验验证指导模型优化，形成持续改进的闭环设计流程。
+                    </p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check"></i> Design - AI智能设计</li>
+                        <li><i class="fas fa-check"></i> Build - 酵母表达构建</li>
+                        <li><i class="fas fa-check"></i> Test - 活性性能检测</li>
+                        <li><i class="fas fa-check"></i> Learn - 反馈模型优化</li>
+                    </ul>
+                </div>
+
+                <div class="solution-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="solution-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3>突破性成果</h3>
+                    <p>
+                        成功设计出抗菌活性提升40%的LL-37变体，同时显著降低细胞毒性，增强稳定性，为临床应用奠定坚实基础。
+                    </p>
+                    <ul class="solution-features">
+                        <li><i class="fas fa-check"></i> 抗菌活性提升40%</li>
+                        <li><i class="fas fa-check"></i> 细胞毒性显著降低</li>
+                        <li><i class="fas fa-check"></i> 结构稳定性增强</li>
+                        <li><i class="fas fa-check"></i> 预测准确率85%</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Innovation Highlights -->
+    <section class="innovation-section">
+        <div class="container">
+            <div class="innovation-content" data-aos="fade-up">
+                <h2 class="innovation-title">技术创新亮点</h2>
+                <p class="innovation-subtitle">
+                    我们的ESM2-Diffusion-Mamba架构在多个维度实现了突破性创新
+                </p>
+
+                <div class="innovation-highlights">
+                    <div class="highlight-item" data-aos="zoom-in" data-aos-delay="100">
+                        <span class="highlight-number">3</span>
+                        <span class="highlight-label">AI模块融合</span>
+                    </div>
+                    <div class="highlight-item" data-aos="zoom-in" data-aos-delay="200">
+                        <span class="highlight-number">650M</span>
+                        <span class="highlight-label">模型参数</span>
+                    </div>
+                    <div class="highlight-item" data-aos="zoom-in" data-aos-delay="300">
+                        <span class="highlight-number">2.3s</span>
+                        <span class="highlight-label">设计速度</span>
+                    </div>
+                    <div class="highlight-item" data-aos="zoom-in" data-aos-delay="400">
+                        <span class="highlight-number">85%</span>
+                        <span class="highlight-label">预测准确率</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div data-aos="fade-up">
+                <h2 class="section-title">深入了解我们的技术</h2>
+                <p class="section-subtitle">
+                    探索更多技术细节和研究成果
+                </p>
+                <div class="cta-buttons">
+                    <a href="technology.html" class="btn btn-primary">
+                        <i class="fas fa-cogs"></i>
+                        技术架构详情
+                    </a>
+                    <a href="results.html" class="btn btn-outline">
+                        <i class="fas fa-chart-bar"></i>
+                        查看研究成果
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Navigation -->
+    <section class="page-navigation">
+        <div class="container">
+            <div class="nav-links">
+                <a href="../index.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="nav-text">
+                        <div class="nav-title">返回首页</div>
+                        <div class="nav-desc">回到项目主页</div>
+                    </div>
+                </a>
+
+                <a href="technology.html" class="nav-link">
+                    <div class="nav-text">
+                        <div class="nav-title">技术架构</div>
+                        <div class="nav-desc">了解AI技术详情</div>
+                    </div>
+                    <div class="nav-icon">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- External Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 100
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Animated Counter
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            const timer = setInterval(() => {
+                start += increment;
+                element.textContent = Math.floor(start);
+                
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+
+        // Trigger counters when they come into view
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('.stat-number');
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    animateCounter(counter, target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            counterObserver.observe(card);
+        });
+
+        // Highlight numbers animation
+        const highlightObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const number = entry.target.querySelector('.highlight-number');
+                    const text = number.textContent;
+                    
+                    // Extract number and suffix
+                    const match = text.match(/^(\d+)(.*)$/);
+                    if (match) {
+                        const targetNum = parseInt(match[1]);
+                        const suffix = match[2];
+                        
+                        let current = 0;
+                        const increment = targetNum / 60; // ~1 second animation
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= targetNum) {
+                                number.textContent = targetNum + suffix;
+                                clearInterval(timer);
+                            } else {
+                                number.textContent = Math.floor(current) + suffix;
+                            }
+                        }, 16);
+                    }
+                    
+                    highlightObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.highlight-item').forEach(item => {
+            highlightObserver.observe(item);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Timeline animation enhancement
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0s';
+                    entry.target.classList.add('animate-count');
+                }
+            });
+        }, {
+            threshold: 0.3
+        });
+
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            timelineObserver.observe(item);
+        });
+    </script>
+</body>
+</html>
