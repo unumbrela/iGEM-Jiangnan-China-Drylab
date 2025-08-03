@@ -3,322 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>江南大学 iGEM - ESM2-Diffusion-Mamba 抗菌肽设计</title>
+    <title>江南大学 iGEM 2024 - ESM2-Diffusion-Mamba 抗菌肽设计</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="江南大学iGEM团队开发全球首个ESM2-Diffusion-Mamba抗菌肽AI设计流程，抗菌活性提升40%">
+    <meta name="keywords" content="iGEM,抗菌肽,人工智能,ESM2,Diffusion,Mamba,江南大学,合成生物学">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="江南大学iGEM - ESM2-Diffusion-Mamba抗菌肽设计">
+    <meta property="og:description" content="全球首个专门针对抗菌肽优化的AI设计流程">
+    <meta property="og:type" content="website">
+    
+    <!-- External Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    
     <style>
+        /* Reset & Base */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(45deg, #ff6b6b, #feca57);
+            --success-gradient: linear-gradient(45deg, #56ab2f, #a8e6cf);
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9ff;
+            --shadow-light: 0 5px 15px rgba(0,0,0,0.08);
+            --shadow-heavy: 0 15px 35px rgba(0,0,0,0.1);
+            --border-radius: 12px;
         }
 
-        .container {
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            z-index: -1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-light);
+        }
+
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        nav {
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #667eea;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
         }
 
-        .nav-links {
+        .nav-menu {
             display: flex;
             list-style: none;
             gap: 2rem;
+            align-items: center;
         }
 
-        .nav-links a {
+        .nav-link {
             text-decoration: none;
-            color: #333;
+            color: var(--text-dark);
             font-weight: 500;
-            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .nav-links a:hover {
-            color: #667eea;
+        .nav-link:hover {
+            background: var(--bg-light);
+            transform: translateY(-2px);
+        }
+
+        .nav-link.active {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
         }
 
         /* Hero Section */
         .hero {
             height: 100vh;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             color: white;
-            position: relative;
+            text-align: center;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient></defs><circle cx="200" cy="200" r="3" fill="white" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle><circle cx="800" cy="300" r="2" fill="white" opacity="0.3"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/></circle><circle cx="400" cy="700" r="4" fill="white" opacity="0.4"><animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite"/></circle></svg>');
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateX(-100px); }
-            100% { transform: translateX(100px); }
-        }
-
         .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
+            max-width: 1000px;
+            padding: 0 2rem;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(45deg, #fff, #a8edea);
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #fff, #a8edea, #fed6e3);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            line-height: 1.1;
         }
 
-        .hero p {
-            font-size: 1.3rem;
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             margin-bottom: 2rem;
             opacity: 0.9;
-            animation: fadeInUp 1s ease-out 0.3s both;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
-        .cta-button {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(45deg, #ff6b6b, #feca57);
-            color: white;
-            text-decoration: none;
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
             border-radius: 50px;
-            font-weight: bold;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            animation: fadeInUp 1s ease-out 0.6s both;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
-        .cta-button:hover {
+        .btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
         }
 
-        /* Sections */
-        .section {
-            padding: 100px 0;
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Floating Icons */
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.1);
+            font-size: 2rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .floating-icon:nth-child(2) { top: 40%; right: 10%; animation-delay: 2s; }
+        .floating-icon:nth-child(3) { bottom: 30%; left: 15%; animation-delay: 4s; }
+        .floating-icon:nth-child(4) { bottom: 20%; right: 20%; animation-delay: 1s; }
+        .floating-icon:nth-child(5) { top: 60%; left: 50%; animation-delay: 3s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Quick Navigation Cards */
+        .quick-nav {
+            padding: 5rem 0;
             background: white;
-        }
-
-        .section:nth-child(even) {
-            background: #f8f9ff;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #333;
             position: relative;
         }
 
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 4px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            border-radius: 2px;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
 
-        /* Cards */
-        .cards {
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .card {
+        .nav-card {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
         }
 
-        .card:hover {
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .nav-card:hover::before {
+            transform: scaleX(1);
         }
 
         .card-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(45deg, #667eea, #764ba2);
+            background: var(--primary-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: white;
             font-size: 1.5rem;
+            transition: all 0.3s ease;
         }
 
-        .card h3 {
-            color: #333;
+        .nav-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-            font-size: 1.3rem;
+            color: var(--text-dark);
         }
 
-        .card p {
-            color: #666;
-            line-height: 1.8;
+        .card-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
         }
 
-        /* Statistics */
-        .stats {
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-card:hover .card-link {
+            color: #764ba2;
+            gap: 1rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 0;
+            background: var(--bg-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
             text-align: center;
-            margin: 3rem 0;
-        }
-
-        .stat {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
             padding: 2rem;
-            border-radius: 15px;
-            transition: transform 0.3s ease;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .stat:hover {
-            transform: scale(1.05);
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
         }
 
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
+            display: block;
         }
 
         .stat-label {
-            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 0;
+            background: var(--primary-gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
             opacity: 0.9;
         }
 
-        /* Process Timeline */
-        .timeline {
-            position: relative;
-            margin: 3rem 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, #667eea, #764ba2);
-            transform: translateX(-50%);
-        }
-
-        .timeline-item {
-            display: flex;
-            justify-content: flex-end;
-            padding-right: 2rem;
-            position: relative;
-            margin: 2rem 0;
-            width: 50%;
-        }
-
-        .timeline-item:nth-child(even) {
-            align-self: flex-end;
-            justify-content: flex-start;
-            padding-left: 2rem;
-            padding-right: 0;
-            margin-left: 50%;
-        }
-
-        .timeline-content {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(102, 126, 234, 0.1);
-            max-width: 300px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            right: -6px;
-            width: 12px;
-            height: 12px;
-            background: #667eea;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 0 3px #667eea;
-        }
-
-        .timeline-item:nth-child(even)::before {
-            left: -6px;
-            right: auto;
-        }
-
         /* Footer */
-        footer {
-            background: #333;
+        .footer {
+            background: #2c3e50;
             color: white;
-            text-align: center;
-            padding: 3rem 0;
+            padding: 3rem 0 1rem;
         }
 
         .footer-content {
@@ -330,65 +481,114 @@
 
         .footer-section h3 {
             margin-bottom: 1rem;
-            color: #667eea;
+            color: #fff;
         }
 
         .footer-section a {
-            color: #ccc;
+            color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s ease;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
         .footer-section a:hover {
-            color: #667eea;
+            color: #3498db;
         }
 
-        /* Responsive */
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #95a5a6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .timeline::before {
-                left: 20px;
-            }
-            
-            .timeline-item,
-            .timeline-item:nth-child(even) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: 0;
                 width: 100%;
-                margin-left: 0;
-                padding-left: 3rem;
-                padding-right: 0;
+                height: calc(100vh - 80px);
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: start;
+                padding: 2rem;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
             }
-            
-            .timeline-item::before,
-            .timeline-item:nth-child(even)::before {
-                left: 14px;
-                right: auto;
+
+            .nav-menu.active {
+                transform: translateX(0);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hamburger.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .nav-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* Smooth scrolling */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Loading animation */
-        .loading {
+        /* Loading Animation */
+        .loading-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -396,12 +596,12 @@
             transition: opacity 0.5s ease;
         }
 
-        .loading.hidden {
+        .loading-overlay.hidden {
             opacity: 0;
             pointer-events: none;
         }
 
-        .spinner {
+        .loader {
             width: 50px;
             height: 50px;
             border: 3px solid rgba(255, 255, 255, 0.3);
@@ -414,236 +614,467 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--secondary-gradient);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading" id="loading">
-        <div class="spinner"></div>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader"></div>
     </div>
 
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <!-- Navigation -->
-    <header>
-        <nav class="container">
-            <div class="logo">江南大学 iGEM</div>
-            <ul class="nav-links">
-                <li><a href="#overview">项目概览</a></li>
-                <li><a href="#technology">技术架构</a></li>
-                <li><a href="#results">研究成果</a></li>
-                <li><a href="#integration">实验整合</a></li>
-                <li><a href="#impact">社会影响</a></li>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">江南大学 iGEM</a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" class="nav-link active">首页</a></li>
+                <li><a href="pages/overview.html" class="nav-link">项目概览</a></li>
+                <li><a href="pages/technology.html" class="nav-link">技术架构</a></li>
+                <li><a href="pages/results.html" class="nav-link">研究成果</a></li>
+                <li><a href="pages/team.html" class="nav-link">团队介绍</a></li>
+                <li><a href="https://github.com/your-team/esm2-diffusion-mamba" class="nav-link" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a></li>
             </ul>
-        </nav>
-    </header>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
     <!-- Hero Section -->
     <section class="hero">
+        <div id="particles-js"></div>
+        <div class="floating-icons">
+            <i class="fas fa-dna floating-icon"></i>
+            <i class="fas fa-robot floating-icon"></i>
+            <i class="fas fa-microscope floating-icon"></i>
+            <i class="fas fa-atom floating-icon"></i>
+            <i class="fas fa-brain floating-icon"></i>
+        </div>
         <div class="hero-content">
+            <div class="hero-badge">
+                🏆 iGEM 2024 Competition Project
+            </div>
             <h1>ESM2-Diffusion-Mamba</h1>
-            <p>全球首个专门针对抗菌肽优化的AI设计流程<br>将蛋白质设计从传统经验试错提升为精准智能设计</p>
-            <a href="#overview" class="cta-button">探索项目</a>
-        </div>
-    </section>
-
-    <!-- Overview Section -->
-    <section class="section" id="overview">
-        <div class="container">
-            <h2 class="section-title">项目概览与动机</h2>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number">40%</div>
-                    <div class="stat-label">抗菌活性提升</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">700万</div>
-                    <div class="stat-label">年死亡人数</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">100%</div>
-                    <div class="stat-label">开源共享</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">3大</div>
-                    <div class="stat-label">AI模块融合</div>
-                </div>
-            </div>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-icon">🦠</div>
-                    <h3>抗生素耐药危机</h3>
-                    <p>全球每年因抗生素耐药性导致的死亡人数超过700万，预计到2050年将达到1000万。传统抗生素的失效使得寻找新的抗菌方案变得迫在眉睫。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🧬</div>
-                    <h3>LL-37局限性</h3>
-                    <p>现有抗菌肽LL-37虽然具有广谱抗菌活性，但存在细胞毒性高、稳定性差等问题，限制了其临床应用。需要通过精准设计克服这些局限。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🤖</div>
-                    <h3>AI驱动设计</h3>
-                    <p>传统的经验试错方法效率低下。我们开发的ESM2-Diffusion-Mamba架构能够智能预测和优化抗菌肽序列，实现精准设计。</p>
-                </div>
+            <p class="hero-subtitle">
+                全球首个专门针对抗菌肽优化的AI设计流程<br>
+                将蛋白质设计从传统经验试错提升为精准智能设计
+            </p>
+            <div class="hero-buttons">
+                <a href="pages/overview.html" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i>
+                    探索项目
+                </a>
+                <a href="pages/technology.html" class="btn btn-outline">
+                    <i class="fas fa-cogs"></i>
+                    技术详情
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Technology Section -->
-    <section class="section" id="technology">
+    <!-- Quick Navigation -->
+    <section class="quick-nav">
         <div class="container">
-            <h2 class="section-title">AI架构与技术方法</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>ESM2 语言模型</h3>
-                        <p>利用大规模蛋白质语言模型理解序列语义，提取深层生物学特征，为后续优化提供基础表征。</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Diffusion 生成模块</h3>
-                        <p>通过扩散模型进行结构优化生成，在保持生物学合理性的同时探索序列空间，发现潜在的优化方向。</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>Mamba 解码器</h3>
-                        <p>利用状态空间模型实现序列智能输出，确保生成的抗菌肽序列具有良好的生物活性和稳定性。</p>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-content">
-                        <h3>整合优化</h3>
-                        <p>三个模块协同工作，形成完整的设计流程，实现从序列理解到结构优化再到智能输出的全过程自动化。</p>
-                    </div>
-                </div>
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">项目亮点</h2>
+                <p class="section-subtitle">
+                    深入了解我们如何通过AI技术革新抗菌肽设计
+                </p>
             </div>
-        </div>
-    </section>
-
-    <!-- Results Section -->
-    <section class="section" id="results">
-        <div class="container">
-            <h2 class="section-title">结果与性能验证</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3>抗菌活性提升</h3>
-                    <p>AI设计的LL-37变体相比天然序列，抗菌活性平均提升40%，对多种耐药菌株展现出优异的杀伤效果。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔬</div>
-                    <h3>细胞毒性降低</h3>
-                    <p>优化后的变体在保持强抗菌活性的同时，对宿主细胞的毒性显著降低，提高了治疗窗口和安全性。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">⚡</div>
-                    <h3>稳定性增强</h3>
-                    <p>通过结构优化，新设计的抗菌肽在血清和组织环境中展现出更好的稳定性，延长了作用时间。</p>
-                </div>
-                <div class="card">
+            <div class="nav-cards">
+                <a href="pages/overview.html" class="nav-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-icon">🎯</div>
-                    <h3>预测准确性</h3>
-                    <p>计算预测与实验结果的一致性达到85%以上，证明了AI模型的可靠性和实用性。</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <h3 class="card-title">项目概览</h3>
+                    <p class="card-description">
+                        了解抗生素耐药危机背景、LL-37抗菌肽局限性，以及我们的AI解决方案创新点
+                    </p>
+                    <span class="card-link">
+                        查看详情 <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
 
-    <!-- Integration Section -->
-    <section class="section" id="integration">
-        <div class="container">
-            <h2 class="section-title">湿干实验整合</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-icon">🔧</div>
-                    <h3>Design - AI设计</h3>
-                    <p>基于ESM2-Diffusion-Mamba模型预测和设计优化的抗菌肽序列，为实验提供精准的目标分子。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🏗️</div>
-                    <h3>Build - 表达构建</h3>
-                    <p>利用酿酒酵母表达系统构建目标抗菌肽，建立高效的蛋白质生产平台。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🧪</div>
-                    <h3>Test - 活性检测</h3>
-                    <p>通过抗菌活性检测、细胞毒性评估等实验验证AI设计的有效性。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔄</div>
-                    <h3>Learn - 反馈优化</h3>
-                    <p>将实验结果反馈给AI模型，不断优化算法性能，形成持续改进的循环。</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                <a href="pages/technology.html" class="nav-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card-icon">🤖</div>
+                    <h3 class="card-title">AI技术架构</h3>
+                    <p class="card-description">
+                        深入ESM2-Diffusion-Mamba三模块协同工作流程，了解技术优势与生物学约束整合
+                    </p>
+                    <span class="card-link">
+                        技术详情 <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
 
-    <!-- Impact Section -->
-    <section class="section" id="impact">
-        <div class="container">
-            <h2 class="section-title">影响与开源贡献</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-icon">🏥</div>
-                    <h3>临床应用前景</h3>
-                    <p>优化的抗菌肽有望开发为新一代抗感染药物，为临床治疗耐药菌感染提供新的解决方案。</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💾</div>
-                    <h3>开源工具包</h3>
-                    <p>在GitHub上发布完整的AI设计工具包，让全球研究者都能使用我们的技术推进抗菌肽研究。</p>
-                </div>
-                <div class="card">
+                <a href="pages/results.html" class="nav-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">研究成果</h3>
+                    <p class="card-description">
+                        查看AI设计变体的性能数据、抗菌活性提升40%的验证结果和多维度评估
+                    </p>
+                    <span class="card-link">
+                        查看成果 <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+
+                <a href="pages/integration.html" class="nav-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="card-icon">🔬</div>
+                    <h3 class="card-title">湿干实验整合</h3>
+                    <p class="card-description">
+                        探索DBTL循环实施、跨学科协作流程，以及AI辅助的效率提升案例
+                    </p>
+                    <span class="card-link">
+                        了解更多 <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+
+                <a href="pages/impact.html" class="nav-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="card-icon">🌍</div>
-                    <h3>知识传播</h3>
-                    <p>通过科普教育、国际合作交流和创新的传播方式，让更多人了解合成生物学和AI在医学中的应用。</p>
+                    <h3 class="card-title">社会影响</h3>
+                    <p class="card-description">
+                        了解临床应用前景、开源贡献、知识传播成果，以及可持续发展愿景
+                    </p>
+                    <span class="card-link">
+                        社会价值 <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+
+                <a href="pages/team.html" class="nav-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="card-icon">👥</div>
+                    <h3 class="card-title">团队介绍</h3>
+                    <p class="card-description">
+                        认识我们的跨学科团队成员、导师团队，以及团队协作和成长历程
+                    </p>
+                    <span class="card-link">
+                        认识团队 <i class="fas fa-arrow-right"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">项目成果数据</h2>
+                <p class="section-subtitle">用数据展示我们的创新突破</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
+                    <span class="stat-number" data-count="40">0</span>
+                    <span class="stat-label">抗菌活性提升 %</span>
                 </div>
-                <div class="card">
-                    <div class="card-icon">♻️</div>
-                    <h3>可持续发展</h3>
-                    <p>推动绿色生物制造技术，实现技术民主化，为全球健康公平贡献力量。</p>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+                    <span class="stat-number" data-count="85">0</span>
+                    <span class="stat-label">预测准确性 %</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
+                    <span class="stat-number" data-count="3">0</span>
+                    <span class="stat-label">AI模块融合</span>
+                </div>
+                <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
+                    <span class="stat-number" data-count="100">0</span>
+                    <span class="stat-label">开源共享 %</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="fade-up">
+                <h2 class="cta-title">开启抗菌肽设计新时代</h2>
+                <p class="cta-subtitle">
+                    加入我们，共同推动AI驱动的生物医学创新
+                </p>
+                <div class="hero-buttons">
+                    <a href="https://github.com/your-team/esm2-diffusion-mamba" class="btn btn-outline" target="_blank">
+                        <i class="fab fa-github"></i>
+                        访问 GitHub
+                    </a>
+                    <a href="pages/overview.html" class="btn btn-primary">
+                        <i class="fas fa-play"></i>
+                        开始探索
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>联系我们</h3>
-                    <p>江南大学 iGEM 团队</p>
-                    <p>计算生物学创新中心</p>
-                    <p>邮箱: igem@jiangnan.edu.cn</p>
+                    <a href="mailto:igem@jiangnan.edu.cn">
+                        <i class="fas fa-envelope"></i> igem@jiangnan.edu.cn
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-map-marker-alt"></i> 江南大学生物工程学院
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-phone"></i> +86-510-85918201
+                    </a>
                 </div>
                 <div class="footer-section">
                     <h3>快速链接</h3>
-                    <p><a href="https://github.com/your-team/esm2-diffusion-mamba">GitHub 仓库</a></p>
-                    <p><a href="#">在线预测平台</a></p>
-                    <p><a href="#">技术文档</a></p>
+                    <a href="pages/overview.html">项目概览</a>
+                    <a href="pages/technology.html">技术架构</a>
+                    <a href="pages/results.html">研究成果</a>
+                    <a href="pages/team.html">团队介绍</a>
+                </div>
+                <div class="footer-section">
+                    <h3>资源下载</h3>
+                    <a href="https://github.com/your-team/esm2-diffusion-mamba" target="_blank">
+                        <i class="fab fa-github"></i> GitHub 仓库
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-file-pdf"></i> 技术文档
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-database"></i> 数据集
+                    </a>
                 </div>
                 <div class="footer-section">
                     <h3>关注我们</h3>
-                    <p><a href="#">微信公众号</a></p>
-                    <p><a href="#">知乎专栏</a></p>
-                    <p><a href="#">B站频道</a></p>
+                    <a href="#">
+                        <i class="fab fa-weixin"></i> 微信公众号
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-zhihu"></i> 知乎专栏
+                    </a>
+                    <a href="#">
+                        <i class="fab fa-bilibili"></i> B站频道
+                    </a>
                 </div>
             </div>
-            <p>&copy; 2024 江南大学 iGEM 团队. 保留所有权利.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2024 江南大学 iGEM 团队. 保留所有权利. | 
+                   <a href="#" style="color: #95a5a6;">隐私政策</a> | 
+                   <a href="#" style="color: #95a5a6;">使用条款</a>
+                </p>
+            </div>
         </div>
     </footer>
 
+    <!-- External Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
     <script>
-        // Loading screen
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 100
+        });
+
+        // Loading Screen
         window.addEventListener('load', function() {
-            const loading = document.getElementById('loading');
+            const loadingOverlay = document.getElementById('loadingOverlay');
             setTimeout(() => {
-                loading.classList.add('hidden');
+                loadingOverlay.classList.add('hidden');
             }, 1000);
         });
 
-        // Smooth scrolling for navigation links
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const scrollProgress = document.getElementById('scrollProgress');
+            
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Update scroll progress
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Mobile Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Particles.js Configuration
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Animated Counter
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            const timer = setInterval(() => {
+                start += increment;
+                element.textContent = Math.floor(start);
+                
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+
+        // Trigger counters when they come into view
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('.stat-number');
+                    const target = parseInt(counter.getAttribute('data-count'));
+                    animateCounter(counter, target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            counterObserver.observe(card);
+        });
+
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -657,33 +1088,69 @@
             });
         });
 
-        // Add scroll effect to navigation
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
+        // Add page transition effect
+        function addPageTransition(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        // Apply transition to all internal links
+        document.querySelectorAll('a[href^="pages/"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                addPageTransition(this.href);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
             }
         });
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
-                }
+        // Performance optimization: Lazy load images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
             });
-        }, observerOptions);
 
-        // Observe all cards and timeline items
-        document.querySelectorAll('.card, .timeline-item, .stat').forEach(el => {
-            observer.observe(el);
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Add easter egg
+        let konamiCode = [];
+        const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // ↑↑↓↓←→←→BA
+
+        document.addEventListener('keydown', function(e) {
+            konamiCode.push(e.keyCode);
+            
+            if (konamiCode.length > 10) {
+                konamiCode.shift();
+            }
+            
+            if (konamiCode.join(',') === konamiSequence.join(',')) {
+                // Easter egg: Add special effect
+                document.body.style.animation = 'pulse 0.5s ease-in-out 3';
+                setTimeout(() => {
+                    alert('🎉 恭喜发现彩蛋！iGEM团队为您点赞！');
+                }, 1500);
+                konamiCode = [];
+            }
         });
     </script>
 </body>

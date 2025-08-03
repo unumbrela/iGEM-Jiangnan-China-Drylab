@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>江南大学 iGEM - ESM2-Diffusion-Mamba 抗菌肽设计</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:1" /><stop offset="100%" style="stop-color:rgba(255,255,255,0);stop-opacity:1" /></radialGradient></defs><circle cx="200" cy="200" r="3" fill="white" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle><circle cx="800" cy="300" r="2" fill="white" opacity="0.3"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="3s" repeatCount="indefinite"/></circle><circle cx="400" cy="700" r="4" fill="white" opacity="0.4"><animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.5s" repeatCount="indefinite"/></circle></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #a8edea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .section:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Statistics */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .stat {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Process Timeline */
+        .timeline {
+            position: relative;
+            margin: 3rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 2rem;
+            position: relative;
+            margin: 2rem 0;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            align-self: flex-end;
+            justify-content: flex-start;
+            padding-left: 2rem;
+            padding-right: 0;
+            margin-left: 50%;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            max-width: 300px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -6px;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -6px;
+            right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                width: 100%;
+                margin-left: 0;
+                padding-left: 3rem;
+                padding-right: 0;
+            }
+            
+            .timeline-item::before,
+            .timeline-item:nth-child(even)::before {
+                left: 14px;
+                right: auto;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <header>
+        <nav class="container">
+            <div class="logo">江南大学 iGEM</div>
+            <ul class="nav-links">
+                <li><a href="#overview">项目概览</a></li>
+                <li><a href="#technology">技术架构</a></li>
+                <li><a href="#results">研究成果</a></li>
+                <li><a href="#integration">实验整合</a></li>
+                <li><a href="#impact">社会影响</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>ESM2-Diffusion-Mamba</h1>
+            <p>全球首个专门针对抗菌肽优化的AI设计流程<br>将蛋白质设计从传统经验试错提升为精准智能设计</p>
+            <a href="#overview" class="cta-button">探索项目</a>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="section" id="overview">
+        <div class="container">
+            <h2 class="section-title">项目概览与动机</h2>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">40%</div>
+                    <div class="stat-label">抗菌活性提升</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">700万</div>
+                    <div class="stat-label">年死亡人数</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">开源共享</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">3大</div>
+                    <div class="stat-label">AI模块融合</div>
+                </div>
+            </div>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">🦠</div>
+                    <h3>抗生素耐药危机</h3>
+                    <p>全球每年因抗生素耐药性导致的死亡人数超过700万，预计到2050年将达到1000万。传统抗生素的失效使得寻找新的抗菌方案变得迫在眉睫。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧬</div>
+                    <h3>LL-37局限性</h3>
+                    <p>现有抗菌肽LL-37虽然具有广谱抗菌活性，但存在细胞毒性高、稳定性差等问题，限制了其临床应用。需要通过精准设计克服这些局限。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3>AI驱动设计</h3>
+                    <p>传统的经验试错方法效率低下。我们开发的ESM2-Diffusion-Mamba架构能够智能预测和优化抗菌肽序列，实现精准设计。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section class="section" id="technology">
+        <div class="container">
+            <h2 class="section-title">AI架构与技术方法</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>ESM2 语言模型</h3>
+                        <p>利用大规模蛋白质语言模型理解序列语义，提取深层生物学特征，为后续优化提供基础表征。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Diffusion 生成模块</h3>
+                        <p>通过扩散模型进行结构优化生成，在保持生物学合理性的同时探索序列空间，发现潜在的优化方向。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Mamba 解码器</h3>
+                        <p>利用状态空间模型实现序列智能输出，确保生成的抗菌肽序列具有良好的生物活性和稳定性。</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>整合优化</h3>
+                        <p>三个模块协同工作，形成完整的设计流程，实现从序列理解到结构优化再到智能输出的全过程自动化。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="section" id="results">
+        <div class="container">
+            <h2 class="section-title">结果与性能验证</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>抗菌活性提升</h3>
+                    <p>AI设计的LL-37变体相比天然序列，抗菌活性平均提升40%，对多种耐药菌株展现出优异的杀伤效果。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔬</div>
+                    <h3>细胞毒性降低</h3>
+                    <p>优化后的变体在保持强抗菌活性的同时，对宿主细胞的毒性显著降低，提高了治疗窗口和安全性。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>稳定性增强</h3>
+                    <p>通过结构优化，新设计的抗菌肽在血清和组织环境中展现出更好的稳定性，延长了作用时间。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>预测准确性</h3>
+                    <p>计算预测与实验结果的一致性达到85%以上，证明了AI模型的可靠性和实用性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Section -->
+    <section class="section" id="integration">
+        <div class="container">
+            <h2 class="section-title">湿干实验整合</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">🔧</div>
+                    <h3>Design - AI设计</h3>
+                    <p>基于ESM2-Diffusion-Mamba模型预测和设计优化的抗菌肽序列，为实验提供精准的目标分子。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏗️</div>
+                    <h3>Build - 表达构建</h3>
+                    <p>利用酿酒酵母表达系统构建目标抗菌肽，建立高效的蛋白质生产平台。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🧪</div>
+                    <h3>Test - 活性检测</h3>
+                    <p>通过抗菌活性检测、细胞毒性评估等实验验证AI设计的有效性。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔄</div>
+                    <h3>Learn - 反馈优化</h3>
+                    <p>将实验结果反馈给AI模型，不断优化算法性能，形成持续改进的循环。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section class="section" id="impact">
+        <div class="container">
+            <h2 class="section-title">影响与开源贡献</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <h3>临床应用前景</h3>
+                    <p>优化的抗菌肽有望开发为新一代抗感染药物，为临床治疗耐药菌感染提供新的解决方案。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💾</div>
+                    <h3>开源工具包</h3>
+                    <p>在GitHub上发布完整的AI设计工具包，让全球研究者都能使用我们的技术推进抗菌肽研究。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌍</div>
+                    <h3>知识传播</h3>
+                    <p>通过科普教育、国际合作交流和创新的传播方式，让更多人了解合成生物学和AI在医学中的应用。</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">♻️</div>
+                    <h3>可持续发展</h3>
+                    <p>推动绿色生物制造技术，实现技术民主化，为全球健康公平贡献力量。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>联系我们</h3>
+                    <p>江南大学 iGEM 团队</p>
+                    <p>计算生物学创新中心</p>
+                    <p>邮箱: igem@jiangnan.edu.cn</p>
+                </div>
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <p><a href="https://github.com/your-team/esm2-diffusion-mamba">GitHub 仓库</a></p>
+                    <p><a href="#">在线预测平台</a></p>
+                    <p><a href="#">技术文档</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>关注我们</h3>
+                    <p><a href="#">微信公众号</a></p>
+                    <p><a href="#">知乎专栏</a></p>
+                    <p><a href="#">B站频道</a></p>
+                </div>
+            </div>
+            <p>&copy; 2024 江南大学 iGEM 团队. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.classList.add('hidden');
+            }, 1000);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to navigation
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and timeline items
+        document.querySelectorAll('.card, .timeline-item, .stat').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
