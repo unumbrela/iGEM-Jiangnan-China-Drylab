@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>江南大学 iGEM - ESM2-Diffusion-Mamba 抗菌肽设计</title>
+    <title>江南大学 iGEM - Diffusion-RL 抗菌肽设计</title>
     <style>
         * {
             margin: 0;
@@ -439,8 +439,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>ESM2-Diffusion-Mamba</h1>
-            <p>全球首个专门针对抗菌肽优化的AI设计流程<br>将蛋白质设计从传统经验试错提升为精准智能设计</p>
+            <h1>Diffusion-RL</h1>
+            <p>专门针对抗菌肽优化的AI设计流程<br>将蛋白质设计从传统经验试错提升为精准智能设计</p>
             <a href="#overview" class="cta-button">探索项目</a>
         </div>
     </section>
@@ -451,7 +451,7 @@
             <h2 class="section-title">项目概览与动机</h2>
             <div class="stats">
                 <div class="stat">
-                    <div class="stat-number">40%</div>
+                    <div class="stat-number">60%</div>
                     <div class="stat-label">抗菌活性提升</div>
                 </div>
                 <div class="stat">
@@ -481,7 +481,7 @@
                 <div class="card">
                     <div class="card-icon">🤖</div>
                     <h3>AI驱动设计</h3>
-                    <p>传统的经验试错方法效率低下。我们开发的ESM2-Diffusion-Mamba架构能够智能预测和优化抗菌肽序列，实现精准设计。</p>
+                    <p>传统的经验试错方法效率低下。我们开发的Diffusion-RL架构能够智能预测和优化抗菌肽序列，实现精准设计。</p>
                 </div>
             </div>
         </div>
@@ -528,7 +528,7 @@
                 <div class="card">
                     <div class="card-icon">📊</div>
                     <h3>抗菌活性提升</h3>
-                    <p>AI设计的LL-37变体相比天然序列，抗菌活性平均提升40%，对多种耐药菌株展现出优异的杀伤效果。</p>
+                    <p>AI设计的LL-37变体相比天然序列，抗菌活性平均提升60%，对多种耐药菌株展现出优异的杀伤效果。</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🔬</div>
@@ -557,7 +557,7 @@
                 <div class="card">
                     <div class="card-icon">🔧</div>
                     <h3>Design - AI设计</h3>
-                    <p>基于ESM2-Diffusion-Mamba模型预测和设计优化的抗菌肽序列，为实验提供精准的目标分子。</p>
+                    <p>基于Diffusion-RL模型预测和设计优化的抗菌肽序列，为实验提供精准的目标分子。</p>
                 </div>
                 <div class="card">
                     <div class="card-icon">🏗️</div>
@@ -619,7 +619,7 @@
                 </div>
                 <div class="footer-section">
                     <h3>快速链接</h3>
-                    <p><a href="https://github.com/your-team/esm2-diffusion-mamba">GitHub 仓库</a></p>
+                    <p><a href="https://github.com/your-team/Diffusion-RL">GitHub 仓库</a></p>
                     <p><a href="#">在线预测平台</a></p>
                     <p><a href="#">技术文档</a></p>
                 </div>
@@ -630,7 +630,7 @@
                     <p><a href="#">B站频道</a></p>
                 </div>
             </div>
-            <p>&copy; 2024 江南大学 iGEM 团队. 保留所有权利.</p>
+            <p>&copy; 2025 江南大学 iGEM 团队. 保留所有权利.</p>
         </div>
     </footer>
 
