@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>社会影响 - Diffusion-RL</title>
+    <title>Social Impact - CytoFlow</title>
     
     <!-- External Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -203,325 +203,298 @@
         }
 
         .impact-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--social-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             margin-bottom: 1rem;
-        }
-
-        .impact-card h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-
-        .impact-description {
-            color: var(--text-light);
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .impact-metric {
-            text-align: center;
-            padding: 1rem;
-            background: var(--bg-light);
-            border-radius: 8px;
-        }
-
-        .metric-value {
-            font-size: 2rem;
-            font-weight: 900;
             background: var(--social-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            display: block;
+        }
+
+        .impact-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .impact-desc {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--social-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
         }
 
         .metric-label {
-            font-size: 0.9rem;
             color: var(--text-light);
-            font-weight: 600;
+            font-size: 0.9rem;
         }
 
-        /* Global Stats */
+        /* Global Health Section */
         .global-stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin: 3rem 0;
+            margin: 4rem 0;
         }
 
         .global-stat {
-            text-align: center;
-            padding: 2rem;
             background: white;
+            padding: 2.5rem;
             border-radius: var(--border-radius);
+            text-align: center;
             box-shadow: var(--shadow-light);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .global-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .global-stat-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--global-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .global-stat-number {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 900;
             background: var(--global-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
-            display: block;
         }
 
         .global-stat-label {
             color: var(--text-light);
-            font-weight: 600;
+            font-size: 1rem;
         }
 
-        /* Open Source Grid */
+        .global-description {
+            background: white;
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            margin: 3rem 0;
+        }
+
+        .global-description h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            background: var(--global-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .global-description p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Open Source Section */
+        .opensource-section {
+            background: white;
+            padding: 4rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            margin: 3rem 0;
+        }
+
+        .opensource-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .opensource-intro h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            background: var(--open-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .opensource-intro p {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
         .opensource-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin: 3rem 0;
+            margin-top: 3rem;
         }
 
         .opensource-card {
-            background: white;
+            background: var(--bg-light);
             padding: 2rem;
             border-radius: var(--border-radius);
-            box-shadow: var(--shadow-light);
             transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-        }
-
-        .opensource-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--open-gradient);
+            border: 2px solid transparent;
         }
 
         .opensource-card:hover {
+            border-color: #89f7fe;
+            transform: translateY(-3px);
+        }
+
+        .opensource-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: var(--open-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .opensource-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .opensource-card p {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .opensource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .opensource-link:hover {
+            gap: 0.8rem;
+        }
+
+        /* Vision Section */
+        .vision-goals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .vision-goal {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .vision-goal:hover {
             transform: translateY(-5px);
             box-shadow: var(--shadow-heavy);
         }
 
-        .opensource-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--open-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .opensource-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-        }
-
-        .opensource-description {
-            color: var(--text-light);
-            line-height: 1.6;
+        .goal-icon {
+            font-size: 3rem;
             margin-bottom: 1.5rem;
-        }
-
-        .opensource-links {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .opensource-link {
-            padding: 0.5rem 1rem;
-            background: var(--open-gradient);
-            color: white;
-            text-decoration: none;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .opensource-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 166, 255, 0.4);
-        }
-
-        /* Vision Goals */
-        .vision-section {
             background: var(--future-gradient);
-            color: white;
-            padding: 5rem 0;
-            text-align: center;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .vision-title {
+        .goal-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .goal-desc {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 5rem 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .cta-title {
             font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 800;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
-        .vision-subtitle {
-            font-size: 1.3rem;
+        .cta-text {
+            font-size: 1.2rem;
             opacity: 0.9;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
-        .vision-goals {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .vision-goal {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: var(--border-radius);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .vision-goal:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .goal-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            display: block;
-        }
-
-        .goal-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .goal-description {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            line-height: 1.6;
-        }
-
-        /* CTA Section */
-        .cta-section {
-            background: white;
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 2rem;
-        }
-
         .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
             transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        .btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text-dark);
-            border: 2px solid var(--text-light);
-        }
-
-        .btn-outline:hover {
-            background: var(--text-dark);
-            color: white;
-            border-color: var(--text-dark);
-            transform: translateY(-3px);
-        }
-
-        /* Page Navigation */
+        /* Navigation Footer */
         .page-navigation {
-            background: var(--bg-light);
-            padding: 3rem 0;
+            padding: 4rem 0;
         }
 
         .nav-links {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
         .nav-link {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem 2rem;
             background: white;
+            padding: 2rem;
             border-radius: var(--border-radius);
-            box-shadow: var(--shadow-light);
             text-decoration: none;
             color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-light);
             transition: all 0.3s ease;
-            min-width: 200px;
         }
 
         .nav-link:hover {
             transform: translateY(-3px);
             box-shadow: var(--shadow-heavy);
-        }
-
-        .nav-icon {
-            width: 40px;
-            height: 40px;
             background: var(--primary-gradient);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             color: white;
         }
 
@@ -530,57 +503,35 @@
         }
 
         .nav-title {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .nav-desc {
             font-size: 0.9rem;
-            color: var(--text-light);
+            opacity: 0.7;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .impact-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .opensource-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .vision-goals {
-                grid-template-columns: 1fr;
-            }
-
-            .global-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-links {
-                flex-direction: column;
-            }
-
-            .nav-link {
-                width: 100%;
-            }
+        .nav-icon {
+            font-size: 1.5rem;
+            opacity: 0.6;
         }
 
-        @media (max-width: 480px) {
-            .global-stats {
-                grid-template-columns: 1fr;
-            }
+        .nav-link:hover .nav-icon {
+            opacity: 1;
+            transform: translateX(5px);
+        }
 
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .btn {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
+        /* Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            z-index: 1001;
+            transition: width 0.1s ease;
         }
 
         /* Animations */
@@ -595,16 +546,29 @@
             }
         }
 
-        /* Scroll Progress */
-        .scroll-progress {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: var(--social-gradient);
-            z-index: 1001;
-            transition: width 0.1s ease;
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 4rem 0 3rem;
+            }
+
+            .content-section {
+                padding: 3rem 0;
+            }
+
+            .impact-grid,
+            .global-stats,
+            .vision-goals {
+                grid-template-columns: 1fr;
+            }
+
+            .opensource-section {
+                padding: 2rem;
+            }
+
+            .cta-section {
+                padding: 3rem 1rem;
+            }
         }
     </style>
 </head>
@@ -615,210 +579,141 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="../index.html" class="logo">江南大学 iGEM</a>
+            <a href="../index.html" class="logo">CytoFlow</a>
             <div class="breadcrumb">
-                <a href="../index.html">
-                    <i class="fas fa-home"></i> 首页
-                </a>
-                <i class="fas fa-chevron-right"></i>
-                <span class="current">社会影响</span>
+                <a href="../index.html">Home</a>
+                <span>/</span>
+                <span class="current">Social Impact</span>
             </div>
         </div>
     </nav>
 
-    <!-- Page Hero -->
-    <section class="page-hero">
+    <!-- Hero Section -->
+    <section class="page-hero" data-aos="fade">
         <div class="container">
-            <div data-aos="fade-up">
-                <h1 class="hero-title">社会影响与价值创造</h1>
-                <p class="hero-subtitle">
-                    探索我们的研究如何为全球健康挑战<br>
-                    提供解决方案并推动科技民主化
-                </p>
-            </div>
+            <h1 class="hero-title">Social Impact</h1>
+            <p class="hero-subtitle">Creating Accessible and Equitable Healthcare Solutions Through Innovative Technology</p>
         </div>
     </section>
 
-    <!-- Clinical Impact -->
+    <!-- Clinical Impact Section -->
     <section class="content-section">
         <div class="container">
-            <div data-aos="fade-up">
-                <h2 class="section-title clinical-title">临床应用前景</h2>
-                <p class="section-subtitle">
-                    我们的AI设计技术为临床抗感染治疗开辟了新路径
-                </p>
-            </div>
+            <h2 class="section-title clinical-title" data-aos="fade-up">Transforming Clinical Practice</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                CytoFlow is revolutionizing cancer diagnosis efficiency and accuracy, bringing hope to thousands of patients
+            </p>
 
             <div class="impact-grid">
                 <div class="impact-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="impact-icon">
-                        <i class="fas fa-hospital"></i>
-                    </div>
-                    <h3>新药研发加速</h3>
-                    <p class="impact-description">
-                        传统抗菌药物研发周期长达10-15年，我们的AI技术将抗菌肽设计时间缩短至数周，预计可将新药上市时间提前5-8年。
-                    </p>
-                    <div class="impact-metric">
-                        <span class="metric-value" data-count="90">0</span>
-                        <span class="metric-label">% 时间节省</span>
-                    </div>
+                    <i class="fas fa-clock impact-icon"></i>
+                    <h3 class="impact-title">Dramatically Reduced Detection Time</h3>
+                    <p class="impact-desc">Traditional methods require 2-3 days for detection, while CytoFlow completes the entire analysis process in just 30 minutes, accelerating the treatment decision-making process</p>
+                    <div class="metric-value" data-count="30">0</div>
+                    <div class="metric-label">Minutes for complete analysis</div>
                 </div>
 
                 <div class="impact-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="impact-icon">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <h3>患者治疗获益</h3>
-                    <p class="impact-description">
-                        设计的抗菌肽具有更高的治疗指数，在提升抗菌效果的同时显著降低副作用。预计每年可拯救数十万因耐药菌感染而濒危的生命。
-                    </p>
-                    <div class="impact-metric">
-                        <span class="metric-value" data-count="65">0</span>
-                        <span class="metric-label">% 毒性降低</span>
-                    </div>
+                    <i class="fas fa-chart-line impact-icon"></i>
+                    <h3 class="impact-title">Significantly Improved Accuracy</h3>
+                    <p class="impact-desc">Through AI-assisted flow cytometry analysis, significantly reducing human error and improving the accuracy of leukemia diagnosis</p>
+                    <div class="metric-value" data-count="98">0</div>
+                    <div class="metric-label">Detection Accuracy (%)</div>
                 </div>
 
                 <div class="impact-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="impact-icon">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <h3>医疗成本降低</h3>
-                    <p class="impact-description">
-                        通过精准设计减少药物开发失败率，降低研发成本，最终惠及患者。预计可将抗菌药物价格降低30-50%。
-                    </p>
-                    <div class="impact-metric">
-                        <span class="metric-value" data-count="40">0</span>
-                        <span class="metric-label">% 成本降低</span>
-                    </div>
-                </div>
-
-                <div class="impact-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="impact-icon">
-                        <i class="fas fa-shield-virus"></i>
-                    </div>
-                    <h3>抗性进化应对</h3>
-                    <p class="impact-description">
-                        AI技术能够预测细菌进化路径，提前设计下一代抗菌肽，建立动态防御体系，从根本上延缓抗药性的产生。
-                    </p>
-                    <div class="impact-metric">
-                        <span class="metric-value" data-count="3">0</span>
-                        <span class="metric-label">倍延缓抗性</span>
-                    </div>
+                    <i class="fas fa-dollar-sign impact-icon"></i>
+                    <h3 class="impact-title">Reduced Economic Burden</h3>
+                    <p class="impact-desc">Affordable detection solution reduces testing costs by 40%, making advanced cancer detection technology accessible to more patients</p>
+                    <div class="metric-value" data-count="40">0</div>
+                    <div class="metric-label">Cost Reduction (%)</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Global Reach -->
+    <!-- Global Health Section -->
     <section class="content-section">
         <div class="container">
-            <div data-aos="fade-up">
-                <h2 class="section-title global-title">全球影响力与合作</h2>
-                <p class="section-subtitle">
-                    我们的技术正在影响全球抗菌药物研发生态
-                </p>
-            </div>
+            <h2 class="section-title global-title" data-aos="fade-up">Global Health Impact</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Our mission is to make high-quality cancer detection accessible to every corner of the world
+            </p>
 
             <div class="global-stats">
-                <div class="global-stat" data-aos="zoom-in" data-aos-delay="100">
-                    <span class="global-stat-number" data-count="25">0</span>
-                    <span class="global-stat-label">合作国家</span>
-                </div>
                 <div class="global-stat" data-aos="zoom-in" data-aos-delay="200">
-                    <span class="global-stat-number" data-count="150">0</span>
-                    <span class="global-stat-label">+ 研究机构</span>
+                    <i class="fas fa-users global-stat-icon"></i>
+                    <div class="global-stat-number" data-count="10000">0</div>
+                    <div class="global-stat-label">Expected Patients Benefited (per year)</div>
                 </div>
+
                 <div class="global-stat" data-aos="zoom-in" data-aos-delay="300">
-                    <span class="global-stat-number" data-count="50">0</span>
-                    <span class="global-stat-label">K+ 下载量</span>
+                    <i class="fas fa-hospital global-stat-icon"></i>
+                    <div class="global-stat-number" data-count="500">0</div>
+                    <div class="global-stat-label">Target Medical Institutions</div>
                 </div>
-                <div class="global-stat" data-aos="zoom-in" data-aos-delay="400">
-                    <span class="global-stat-number" data-count="12">0</span>
-                    <span class="global-stat-label">种语言版本</span>
-                </div>
+            </div>
+
+            <div class="global-description" data-aos="fade-up">
+                <h3>Focused on Developing Regions</h3>
+                <p>
+                    China reports approximately 475,000 new leukemia cases annually, with mid- to low-tier hospitals and 
+                    developing regions lacking sufficient resources for traditional detection methods. CytoFlow's mission 
+                    is to provide accessible, efficient, and accurate detection solutions for these areas, ensuring every 
+                    patient can access high-quality medical services.
+                </p>
+                <p>
+                    Through technology innovation and cost optimization, we're breaking down healthcare resource barriers 
+                    and promoting the popularization of medical technology, making precision diagnosis no longer an 
+                    exclusive right of large medical institutions.
+                </p>
             </div>
         </div>
     </section>
 
-    <!-- Open Source Contribution -->
+    <!-- Open Source Section -->
     <section class="content-section">
         <div class="container">
-            <div data-aos="fade-up">
-                <h2 class="section-title open-title">开源贡献与知识共享</h2>
-                <p class="section-subtitle">
-                    通过开源推动科技民主化，让全球研究者共享AI技术红利
-                </p>
-            </div>
-
-            <div class="opensource-grid">
-                <div class="opensource-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="opensource-icon">
-                        <i class="fab fa-github"></i>
-                    </div>
-                    <h3 class="opensource-title">GitHub开源项目</h3>
-                    <p class="opensource-description">
-                        完整的Diffusion-RL代码库，包含模型架构、训练脚本、评估工具和详细文档。
+            <h2 class="section-title open-title" data-aos="fade-up">Open Source Commitment</h2>
+            
+            <div class="opensource-section" data-aos="fade-up">
+                <div class="opensource-intro">
+                    <h3>Driving Medical Technology Progress Together</h3>
+                    <p>
+                        We believe open source is an important way to promote technology democratization and accelerate 
+                        medical innovation. CytoFlow commits to openly sharing core technologies and research findings, 
+                        collaborating with global researchers and developers to advance cancer detection technology.
                     </p>
-                    <div class="opensource-links">
-                        <a href="#" class="opensource-link">
-                            <i class="fab fa-github"></i> 源代码
-                        </a>
-                        <a href="#" class="opensource-link">
-                            <i class="fas fa-book"></i> 文档
-                        </a>
-                    </div>
                 </div>
 
-                <div class="opensource-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="opensource-icon">
-                        <i class="fas fa-cloud"></i>
-                    </div>
-                    <h3 class="opensource-title">在线预测平台</h3>
-                    <p class="opensource-description">
-                        免费的Web服务平台，研究者可直接上传序列进行AI优化设计，无需本地部署。
-                    </p>
-                    <div class="opensource-links">
+                <div class="opensource-grid">
+                    <div class="opensource-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fab fa-github opensource-icon"></i>
+                        <h4>Code Repository</h4>
+                        <p>Complete algorithm implementation and training code, helping developers understand and improve our technology</p>
                         <a href="#" class="opensource-link">
-                            <i class="fas fa-rocket"></i> 立即使用
-                        </a>
-                        <a href="#" class="opensource-link">
-                            <i class="fas fa-question-circle"></i> 使用指南
+                            View on GitHub
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
-                </div>
 
-                <div class="opensource-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="opensource-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <h3 class="opensource-title">数据集与基准</h3>
-                    <p class="opensource-description">
-                        精心整理的抗菌肽数据集和评估基准，为研究社区提供标准化的数据资源。
-                    </p>
-                    <div class="opensource-links">
+                    <div class="opensource-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-database opensource-icon"></i>
+                        <h4>Dataset Sharing</h4>
+                        <p>Providing standardized training and testing datasets to accelerate research progress in related fields</p>
                         <a href="#" class="opensource-link">
-                            <i class="fas fa-download"></i> 数据下载
-                        </a>
-                        <a href="#" class="opensource-link">
-                            <i class="fas fa-chart-line"></i> 基准测试
+                            Access Dataset
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
-                </div>
 
-                <div class="opensource-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="opensource-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h3 class="opensource-title">教育资源</h3>
-                    <p class="opensource-description">
-                        包含视频教程、在线课程、工作坊材料，帮助学生和研究者掌握AI生物设计技术。
-                    </p>
-                    <div class="opensource-links">
+                    <div class="opensource-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-book opensource-icon"></i>
+                        <h4>Technical Documentation</h4>
+                        <p>Detailed technical documentation and tutorials, lowering the barrier to technology adoption</p>
                         <a href="#" class="opensource-link">
-                            <i class="fas fa-play"></i> 视频教程
-                        </a>
-                        <a href="#" class="opensource-link">
-                            <i class="fas fa-book-open"></i> 在线课程
+                            Read Documentation
+                            <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
@@ -826,276 +721,272 @@
         </div>
     </section>
 
-    <!-- Future Vision -->
-    <section class="vision-section">
+    <!-- Future Vision Section -->
+    <section class="content-section">
         <div class="container">
-            <div data-aos="fade-up">
-                <h2 class="vision-title">未来愿景与可持续发展</h2>
-                <p class="vision-subtitle">
-                    我们致力于构建一个更加公平、健康、可持续的未来世界
+            <h2 class="section-title future-title" data-aos="fade-up">Future Vision</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">
+                Continuing innovation and expansion to benefit more patients
+            </p>
+
+            <div class="vision-goals">
+                <div class="vision-goal" data-aos="flip-left" data-aos-delay="100">
+                    <i class="fas fa-globe goal-icon"></i>
+                    <h3 class="goal-title">Global Coverage</h3>
+                    <p class="goal-desc">Extend services to more developing countries and regions, making high-quality cancer detection globally accessible</p>
+                </div>
+
+                <div class="vision-goal" data-aos="flip-left" data-aos-delay="200">
+                    <i class="fas fa-microscope goal-icon"></i>
+                    <h3 class="goal-title">Technology Expansion</h3>
+                    <p class="goal-desc">Expand detection capabilities beyond leukemia to include more cancer types, creating a comprehensive cancer detection platform</p>
+                </div>
+
+                <div class="vision-goal" data-aos="flip-left" data-aos-delay="300">
+                    <i class="fas fa-hands-helping goal-icon"></i>
+                    <h3 class="goal-title">Partner Collaboration</h3>
+                    <p class="goal-desc">Partner with more medical institutions and research organizations to advance cancer detection technology together</p>
+                </div>
+
+                <div class="vision-goal" data-aos="flip-left" data-aos-delay="400">
+                    <i class="fas fa-graduation-cap goal-icon"></i>
+                    <h3 class="goal-title">Education & Training</h3>
+                    <p class="goal-desc">Provide professional training courses to help healthcare professionals master AI-assisted diagnostic technology</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="cta-section" data-aos="zoom-in">
+                <h2 class="cta-title">Join Us in Changing Healthcare</h2>
+                <p class="cta-text">
+                    Whether you're a medical professional, researcher, or developer interested in medical technology, 
+                    we welcome you to join our mission
                 </p>
+                <a href="#" class="btn">
+                    <span>Learn More</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page Navigation -->
+    <section class="page-navigation">
+        <div class="container">
+            <div class="nav-links">
+                <a href="technology.html" class="nav-link">
+                    <div class="nav-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="nav-text">
+                        <div class="nav-title">Technology</div>
+                        <div class="nav-desc">Explore Our Innovation</div>
+                    </div>
+                </a>
+
+                <a href="team.html" class="nav-link">
+                    <div class="nav-text">
+                        <div class="nav-title">Team</div>
+                        <div class="nav-desc">Meet Our Team</div>
+                    </div>
+                </a>
+
+                <a href="../index.html" class="nav-link">
+                    <div class="nav-text">
+                        <div class="nav-title">Return Home</div>
+                        <div class="nav-desc">Back to Homepage</div>
+                    </div>
+                    <div class="nav-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- External Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 100
+        });
+
+        // Scroll Progress Bar
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Animated Counter
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            const timer = setInterval(() => {
+                start += increment;
+                element.textContent = Math.floor(start);
                 
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
 
-                <div class="vision-goal" data-aos="zoom-in" data-aos-delay="400">
-                                        <span class="goal-icon">🤝</span>
-                                        <h3 class="goal-title">国际合作</h3>
-                                        <p class="goal-description">
-                                            促进国际科研合作，共同应对全球健康挑战，构建人类命运共同体。
-                                        </p>
-                                    </div>
+        // Trigger counters when they come into view
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
 
-                                    <div class="vision-goal" data-aos="zoom-in" data-aos-delay="500">
-                                        <span class="goal-icon">🎓</span>
-                                        <h3 class="goal-title">人才培养</h3>
-                                        <p class="goal-description">
-                                            培养下一代跨学科创新人才，为未来的科技发展储备智力资源。
-                                        </p>
-                                    </div>
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('.metric-value, .global-stat-number');
+                    counters.forEach(counter => {
+                        const target = parseInt(counter.getAttribute('data-count'));
+                        animateCounter(counter, target);
+                    });
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-                                    <div class="vision-goal" data-aos="zoom-in" data-aos-delay="600">
-                                        <span class="goal-icon">💡</span>
-                                        <h3 class="goal-title">持续创新</h3>
-                                        <p class="goal-description">
-                                            不断推进技术边界，探索AI在更多生物医学领域的应用可能性。
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+        document.querySelectorAll('.impact-card, .global-stat').forEach(card => {
+            counterObserver.observe(card);
+        });
 
-                    <!-- CTA Section -->
-                    <section class="cta-section">
-                        <div class="container">
-                            <div data-aos="fade-up">
-                                <h2 class="section-title">加入我们的使命</h2>
-                                <p class="section-subtitle">
-                                    一起用AI技术改变世界，为人类健康事业贡献力量
-                                </p>
-                                <div class="cta-buttons">
-                                    <a href="https://github.com/your-team/Diffusion-RL" class="btn btn-primary" target="_blank">
-                                        <i class="fab fa-github"></i>
-                                        贡献代码
-                                    </a>
-                                    <a href="#" class="btn btn-outline">
-                                        <i class="fas fa-handshake"></i>
-                                        合作洽谈
-                                    </a>
-                                    <a href="#" class="btn btn-outline">
-                                        <i class="fas fa-envelope"></i>
-                                        联系我们
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+        // Open source links interaction
+        document.querySelectorAll('.opensource-link').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px) scale(1.05)';
+            });
+            
+            link.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-2px) scale(1)';
+            });
+        });
 
-                    <!-- Page Navigation -->
-                    <section class="page-navigation">
-                        <div class="container">
-                            <div class="nav-links">
-                                <a href="team.html" class="nav-link">
-                                    <div class="nav-icon">
-                                        <i class="fas fa-arrow-left"></i>
-                                    </div>
-                                    <div class="nav-text">
-                                        <div class="nav-title">团队介绍</div>
-                                        <div class="nav-desc">了解我们的团队</div>
-                                    </div>
-                                </a>
+        // Impact cards hover effects
+        document.querySelectorAll('.impact-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.impact-icon');
+                icon.style.transform = 'scale(1.1) rotate(5deg)';
+                icon.style.transition = 'all 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.impact-icon');
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
 
-                                <a href="../index.html" class="nav-link">
-                                    <div class="nav-text">
-                                        <div class="nav-title">返回首页</div>
-                                        <div class="nav-desc">回到项目主页</div>
-                                    </div>
-                                    <div class="nav-icon">
-                                        <i class="fas fa-home"></i>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </section>
+        // Vision goals hover effects
+        document.querySelectorAll('.vision-goal').forEach(goal => {
+            goal.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('.goal-icon');
+                icon.style.transform = 'scale(1.2) rotate(10deg)';
+                icon.style.transition = 'all 0.3s ease';
+            });
+            
+            goal.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('.goal-icon');
+                icon.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
 
-                    <!-- External Scripts -->
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-                    <script>
-                        // Initialize AOS
-                        AOS.init({
-                            duration: 800,
-                            easing: 'ease-out-cubic',
-                            once: true,
-                            offset: 100
-                        });
+        // Enhanced button interactions
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.style.transform = 'scale(1.2) rotate(15deg)';
+                    icon.style.transition = 'all 0.3s ease';
+                }
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                const icon = this.querySelector('i');
+                if (icon) {
+                    icon.style.transform = 'scale(1) rotate(0deg)';
+                }
+            });
+        });
 
-                        // Scroll Progress Bar
-                        window.addEventListener('scroll', function() {
-                            const scrollProgress = document.getElementById('scrollProgress');
-                            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                            const scrolled = (winScroll / height) * 100;
-                            scrollProgress.style.width = scrolled + '%';
-                        });
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.page-hero');
+            
+            if (hero) {
+                const speed = scrolled * 0.5;
+                hero.style.transform = `translateY(${speed}px)`;
+            }
+        });
 
-                        // Animated Counter
-                        function animateCounter(element, target, duration = 2000) {
-                            let start = 0;
-                            const increment = target / (duration / 16);
-                            
-                            const timer = setInterval(() => {
-                                start += increment;
-                                element.textContent = Math.floor(start);
-                                
-                                if (start >= target) {
-                                    element.textContent = target;
-                                    clearInterval(timer);
-                                }
-                            }, 16);
-                        }
+        // Random floating animation
+        function addFloatingAnimation() {
+            const icons = document.querySelectorAll('.goal-icon, .impact-icon, .opensource-icon');
+            icons.forEach((icon, index) => {
+                const delay = Math.random() * 3;
+                const duration = 3 + Math.random() * 2;
+                
+                setInterval(() => {
+                    icon.style.animation = `fadeInUp 0.6s ease-in-out`;
+                    setTimeout(() => {
+                        icon.style.animation = '';
+                    }, 600);
+                }, (duration * 1000) + (delay * 1000));
+            });
+        }
 
-                        // Trigger counters when they come into view
-                        const observerOptions = {
-                            threshold: 0.5,
-                            rootMargin: '0px 0px -100px 0px'
-                        };
+        // Initialize animations after page load
+        setTimeout(addFloatingAnimation, 2000);
 
-                        const counterObserver = new IntersectionObserver((entries) => {
-                            entries.forEach(entry => {
-                                if (entry.isIntersecting) {
-                                    const counters = entry.target.querySelectorAll('.metric-value, .global-stat-number');
-                                    counters.forEach(counter => {
-                                        const target = parseInt(counter.getAttribute('data-count'));
-                                        animateCounter(counter, target);
-                                    });
-                                    counterObserver.unobserve(entry.target);
-                                }
-                            });
-                        }, observerOptions);
+        // Performance optimization
+        const lazyLoad = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    observer.unobserve(entry.target);
+                }
+            });
+        };
 
-                        document.querySelectorAll('.impact-card, .global-stat').forEach(card => {
-                            counterObserver.observe(card);
-                        });
+        const lazyObserver = new IntersectionObserver(lazyLoad, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
 
-                        // Open source links interaction
-                        document.querySelectorAll('.opensource-link').forEach(link => {
-                            link.addEventListener('mouseenter', function() {
-                                this.style.transform = 'translateY(-2px) scale(1.05)';
-                            });
-                            
-                            link.addEventListener('mouseleave', function() {
-                                this.style.transform = 'translateY(-2px) scale(1)';
-                            });
-                        });
-
-                        // Impact cards hover effects
-                        document.querySelectorAll('.impact-card').forEach(card => {
-                            card.addEventListener('mouseenter', function() {
-                                const icon = this.querySelector('.impact-icon');
-                                icon.style.transform = 'scale(1.1) rotate(5deg)';
-                                icon.style.transition = 'all 0.3s ease';
-                            });
-                            
-                            card.addEventListener('mouseleave', function() {
-                                const icon = this.querySelector('.impact-icon');
-                                icon.style.transform = 'scale(1) rotate(0deg)';
-                            });
-                        });
-
-                        // Vision goals hover effects
-                        document.querySelectorAll('.vision-goal').forEach(goal => {
-                            goal.addEventListener('mouseenter', function() {
-                                const icon = this.querySelector('.goal-icon');
-                                icon.style.transform = 'scale(1.2) rotate(10deg)';
-                                icon.style.transition = 'all 0.3s ease';
-                            });
-                            
-                            goal.addEventListener('mouseleave', function() {
-                                const icon = this.querySelector('.goal-icon');
-                                icon.style.transform = 'scale(1) rotate(0deg)';
-                            });
-                        });
-
-                        // Smooth scrolling
-                        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                            anchor.addEventListener('click', function (e) {
-                                e.preventDefault();
-                                const target = document.querySelector(this.getAttribute('href'));
-                                if (target) {
-                                    target.scrollIntoView({
-                                        behavior: 'smooth',
-                                        block: 'start'
-                                    });
-                                }
-                            });
-                        });
-
-                        // Enhanced button interactions
-                        document.querySelectorAll('.btn').forEach(button => {
-                            button.addEventListener('mouseenter', function() {
-                                const icon = this.querySelector('i');
-                                if (icon) {
-                                    icon.style.transform = 'scale(1.2) rotate(15deg)';
-                                    icon.style.transition = 'all 0.3s ease';
-                                }
-                            });
-                            
-                            button.addEventListener('mouseleave', function() {
-                                const icon = this.querySelector('i');
-                                if (icon) {
-                                    icon.style.transform = 'scale(1) rotate(0deg)';
-                                }
-                            });
-                        });
-
-                        // Parallax effect for hero section
-                        window.addEventListener('scroll', function() {
-                            const scrolled = window.pageYOffset;
-                            const hero = document.querySelector('.page-hero');
-                            
-                            if (hero) {
-                                const speed = scrolled * 0.5;
-                                hero.style.transform = `translateY(${speed}px)`;
-                            }
-                        });
-
-                        // Random floating animation
-                        function addFloatingAnimation() {
-                            const icons = document.querySelectorAll('.goal-icon, .impact-icon, .opensource-icon');
-                            icons.forEach((icon, index) => {
-                                const delay = Math.random() * 3;
-                                const duration = 3 + Math.random() * 2;
-                                
-                                setInterval(() => {
-                                    icon.style.animation = `fadeInUp 0.6s ease-in-out`;
-                                    setTimeout(() => {
-                                        icon.style.animation = '';
-                                    }, 600);
-                                }, (duration * 1000) + (delay * 1000));
-                            });
-                        }
-
-                        // Initialize animations after page load
-                        setTimeout(addFloatingAnimation, 2000);
-
-                        // Performance optimization
-                        const lazyLoad = (entries, observer) => {
-                            entries.forEach(entry => {
-                                if (entry.isIntersecting) {
-                                    entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
-                                    observer.unobserve(entry.target);
-                                }
-                            });
-                        };
-
-                        const lazyObserver = new IntersectionObserver(lazyLoad, {
-                            threshold: 0.1,
-                            rootMargin: '0px 0px -50px 0px'
-                        });
-
-                        document.querySelectorAll('.impact-card, .opensource-card, .vision-goal').forEach(element => {
-                            lazyObserver.observe(element);
-                        });
-                    </script>
-                </body>
-                </html>
+        document.querySelectorAll('.impact-card, .opensource-card, .vision-goal').forEach(element => {
+            lazyObserver.observe(element);
+        });
+    </script>
+</body>
+</html>

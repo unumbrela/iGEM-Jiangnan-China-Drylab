@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>技术架构 - Diffusion-RL</title>
+    <title>Technology Architecture - CytoFlow</title>
     
     <!-- External Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -548,13 +548,13 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="../index.html" class="logo">江南大学 iGEM-Drylab</a>
+            <a href="../index.html" class="logo">Jiangnan University iGEM-Drylab</a>
             <div class="breadcrumb">
                 <a href="../index.html">
-                    <i class="fas fa-home"></i> 首页
+                    <i class="fas fa-home"></i> Home
                 </a>
                 <i class="fas fa-chevron-right"></i>
-                <span class="current">技术架构</span>
+                <span class="current">Technology</span>
             </div>
         </div>
     </nav>
@@ -563,10 +563,10 @@
     <section class="page-hero">
         <div class="container">
             <div class="hero-content" data-aos="fade-up">
-                <h1 class="hero-title">AI架构与技术方法</h1>
+                <h1 class="hero-title">CytoFlow Framework Architecture</h1>
                 <p class="hero-subtitle">
-                    深入了解Diffusion-RL三模块协同工作流程<br>
-                    探索技术优势与生物学约束的完美整合
+                    Discover the Three-Model Pipeline:<br>
+                    From Fermentation Optimization to Sequence Evolution
                 </p>
             </div>
         </div>
@@ -576,52 +576,52 @@
     <section class="content-section">
         <div class="container">
             <div data-aos="fade-up">
-                <h2 class="section-title">整体架构设计</h2>
+                <h2 class="section-title">CytoFlow Framework Overview</h2>
                 <p class="section-subtitle">
-                    我们的Diffusion-RL架构将三个强大的AI模块有机结合，形成完整的抗菌肽设计流程
+                    Our CytoFlow framework integrates three AI models forming a complete pipeline from fermentation optimization to sequence evolution
                 </p>
             </div>
 
             <div class="architecture-flow">
                 <div class="flow-step" data-aos="fade-up" data-aos-delay="100">
                     <div class="step-number">1</div>
-                    <h3 class="step-title">ESM2 语言模型</h3>
+                    <h3 class="step-title">CytoGrow Model</h3>
                     <p class="step-description">
-                        利用大规模蛋白质语言模型深度理解序列语义，提取蛋白质的深层生物学特征，为后续优化提供强大的基础表征。
+                        At the fermentation level, in collaboration with wet lab, CytoGrow uses mathematical modeling to simulate cell growth and glucose consumption, achieving over 25% improvement in yeast biomass and providing crucial data support for wet lab experiments.
                     </p>
                     <ul class="step-features">
-                        <li><i class="fas fa-check"></i> 650M参数规模的预训练模型</li>
-                        <li><i class="fas fa-check"></i> 支持长度可变序列输入</li>
-                        <li><i class="fas fa-check"></i> 提取高维语义特征向量</li>
-                        <li><i class="fas fa-check"></i> 生物学功能域识别</li>
+                        <li><i class="fas fa-check"></i> Mathematical modeling of cell growth</li>
+                        <li><i class="fas fa-check"></i> Glucose consumption simulation</li>
+                        <li><i class="fas fa-check"></i> 25%+ biomass improvement</li>
+                        <li><i class="fas fa-check"></i> Wet-dry lab collaboration support</li>
                     </ul>
                 </div>
 
                 <div class="flow-step" data-aos="fade-up" data-aos-delay="200">
                     <div class="step-number">2</div>
-                    <h3 class="step-title">Diffusion 生成模块</h3>
+                    <h3 class="step-title">CytoGuard Model</h3>
                     <p class="step-description">
-                        通过扩散模型进行结构优化生成，在保持生物学合理性的同时探索序列空间，发现潜在的优化方向。
+                        At the molecular level, CytoGuard utilizes Attention Mechanism to integrate 3 protein language models with HyperGraph technology to predict antimicrobial peptide activity (MIC), ensuring accurate assessment of peptide effectiveness.
                     </p>
                     <ul class="step-features">
-                        <li><i class="fas fa-check"></i> 条件扩散生成机制</li>
-                        <li><i class="fas fa-check"></i> 结构约束指导优化</li>
-                        <li><i class="fas fa-check"></i> 多样化序列生成</li>
-                        <li><i class="fas fa-check"></i> 生物活性预测集成</li>
+                        <li><i class="fas fa-check"></i> 3 Protein Language Models integration</li>
+                        <li><i class="fas fa-check"></i> Attention Mechanism fusion</li>
+                        <li><i class="fas fa-check"></i> HyperGraph for structure analysis</li>
+                        <li><i class="fas fa-check"></i> MIC (activity) prediction</li>
                     </ul>
                 </div>
 
                 <div class="flow-step" data-aos="fade-up" data-aos-delay="300">
                     <div class="step-number">3</div>
-                    <h3 class="step-title">Mamba 解码器</h3>
+                    <h3 class="step-title">CytoEvolve Model</h3>
                     <p class="step-description">
-                        利用状态空间模型实现序列智能输出，确保生成的抗菌肽序列具有良好的生物活性和稳定性。
+                        Finally, CytoEvolve combines Diffusion Model and Reinforcement Learning to generate improved LL-37 variants. After wet lab validation, the variants achieved comprehensive enhancements in antimicrobial activity, stability, and reduced cytotoxicity.
                     </p>
                     <ul class="step-features">
-                        <li><i class="fas fa-check"></i> 长程序列依赖建模</li>
-                        <li><i class="fas fa-check"></i> 高效线性时间复杂度</li>
-                        <li><i class="fas fa-check"></i> 序列质量评估机制</li>
-                        <li><i class="fas fa-check"></i> 实时性能优化</li>
+                        <li><i class="fas fa-check"></i> Diffusion Model for generation</li>
+                        <li><i class="fas fa-check"></i> Reinforcement Learning optimization</li>
+                        <li><i class="fas fa-check"></i> Improved LL-37 variants</li>
+                        <li><i class="fas fa-check"></i> Wet lab validated results</li>
                     </ul>
                 </div>
             </div>
@@ -632,47 +632,47 @@
     <section class="content-section">
         <div class="container">
             <div data-aos="fade-up">
-                <h2 class="section-title">技术规格参数</h2>
+                <h2 class="section-title">Technical Specifications</h2>
                 <p class="section-subtitle">
-                    详细的模型参数和性能指标展示我们技术方案的先进性
+                    Detailed model parameters and performance metrics demonstrating our technical advancement
                 </p>
             </div>
 
             <div class="tech-specs">
                 <div class="spec-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="spec-icon">
-                        <i class="fas fa-microchip"></i>
+                        <i class="fas fa-chart-line"></i>
                     </div>
-                    <h3 class="spec-title">模型参数</h3>
-                    <div class="spec-value">650M</div>
-                    <p class="spec-description">ESM2主干网络参数量</p>
+                    <h3 class="spec-title">Biomass Improvement</h3>
+                    <div class="spec-value">25%+</div>
+                    <p class="spec-description">Yeast biomass increase via CytoGrow</p>
                 </div>
 
                 <div class="spec-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="spec-icon">
-                        <i class="fas fa-clock"></i>
+                        <i class="fas fa-brain"></i>
                     </div>
-                    <h3 class="spec-title">推理速度</h3>
-                    <div class="spec-value">2.4s</div>
-                    <p class="spec-description">单个序列生成时间</p>
+                    <h3 class="spec-title">PLM Integration</h3>
+                    <div class="spec-value">3</div>
+                    <p class="spec-description">Protein Language Models in CytoGuard</p>
                 </div>
 
                 <div class="spec-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="spec-icon">
-                        <i class="fas fa-bullseye"></i>
+                        <i class="fas fa-microchip"></i>
                     </div>
-                    <h3 class="spec-title">预测准确率</h3>
-                    <div class="spec-value">85%</div>
-                    <p class="spec-description">抗菌活性预测精度</p>
+                    <h3 class="spec-title">Model Count</h3>
+                    <div class="spec-value">3</div>
+                    <p class="spec-description">Integrated AI models in pipeline</p>
                 </div>
 
                 <div class="spec-card" data-aos="zoom-in" data-aos-delay="400">
                     <div class="spec-icon">
-                        <i class="fas fa-database"></i>
+                        <i class="fas fa-check-circle"></i>
                     </div>
-                    <h3 class="spec-title">训练数据</h3>
-                    <div class="spec-value">14K</div>
-                    <p class="spec-description">抗菌肽序列数据量</p>
+                    <h3 class="spec-title">Validation</h3>
+                    <div class="spec-value">100%</div>
+                    <p class="spec-description">Wet lab validated improvements</p>
                 </div>
             </div>
         </div>
@@ -682,45 +682,45 @@
     <section class="content-section">
         <div class="container">
             <div data-aos="fade-up">
-                <h2 class="section-title">在线演示平台</h2>
+                <h2 class="section-title">Online Demo Platform</h2>
                 <p class="section-subtitle">
-                    体验我们的AI模型如何设计和优化抗菌肽序列
+                    Experience how our CytoFlow framework designs and optimizes antimicrobial peptides
                 </p>
             </div>
 
             <div class="demo-container" data-aos="fade-up" data-aos-delay="200">
                 <div class="demo-input">
                     <div class="input-group">
-                        <label for="sequence-input">输入原始序列</label>
-                        <input type="text" id="sequence-input" placeholder="LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES" 
+                        <label for="sequence-input">Input Original Sequence</label>
+                        <input type="text" id="sequence-input" placeholder="LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES"
                                value="LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES">
                     </div>
                     <div class="input-group">
-                        <label for="target-property">优化目标</label>
+                        <label for="target-property">Optimization Target</label>
                         <select id="target-property">
-                            <option value="antimicrobial">抗菌活性</option>
-                            <option value="stability">稳定性</option>
-                            <option value="toxicity">低毒性</option>
-                            <option value="solubility">溶解性</option>
+                            <option value="antimicrobial">Antimicrobial Activity</option>
+                            <option value="stability">Stability</option>
+                            <option value="toxicity">Low Toxicity</option>
+                            <option value="solubility">Solubility</option>
                         </select>
                     </div>
                     <div class="input-group">
-                        <label for="optimization-level">优化强度</label>
+                        <label for="optimization-level">Optimization Level</label>
                         <select id="optimization-level">
-                            <option value="mild">温和优化</option>
-                            <option value="moderate">中等优化</option>
-                            <option value="aggressive">积极优化</option>
+                            <option value="mild">Mild Optimization</option>
+                            <option value="moderate">Moderate Optimization</option>
+                            <option value="aggressive">Aggressive Optimization</option>
                         </select>
                     </div>
                 </div>
                 <button class="demo-button" onclick="runDemo()">
-                    <span id="button-text">开始设计</span>
+                    <span id="button-text">Start Design</span>
                     <span id="button-loading" class="loading" style="display: none;"></span>
                 </button>
-                
+
                 <div class="demo-output" id="demo-output">
                     <div class="output-placeholder">
-                        点击"开始设计"来体验AI抗菌肽设计过程
+                        Click "Start Design" to experience the CytoFlow peptide design process
                     </div>
                 </div>
             </div>
@@ -731,67 +731,15 @@
     <section class="content-section">
         <div class="container">
             <div data-aos="fade-up">
-                <h2 class="section-title">性能对比分析</h2>
+                <h2 class="section-title">Performance Analysis</h2>
                 <p class="section-subtitle">
-                    我们的模型与传统方法和其他AI方法的性能对比
+                    Comparing our CytoFlow framework with traditional methods and other AI approaches
                 </p>
             </div>
 
             <div class="chart-container" data-aos="fade-up" data-aos-delay="200">
-                <h3 class="chart-title">抗菌活性与计算效率对比</h3>
+                <h3 class="chart-title">Biomass Improvement and Model Performance Comparison</h3>
                 <canvas id="performanceChart"></canvas>
-            </div>
-        </div>
-    </section>
-
-    <!-- Code Example -->
-    <section class="content-section">
-        <div class="container">
-            <div data-aos="fade-up">
-                <h2 class="section-title">代码示例</h2>
-                <p class="section-subtitle">
-                    展示如何使用我们的API进行抗菌肽设计
-                </p>
-            </div>
-
-            <div class="code-block" data-aos="fade-up" data-aos-delay="200">
-                <div class="code-header">
-                    <span class="code-lang">Python</span>
-                    <button class="copy-btn" onclick="copyCode()">复制代码</button>
-                </div>
-                <div class="code-content" id="code-content">
-<pre>import torch
-from esm2_diffusion_mamba import AntimicrobialDesigner
-
-# 初始化设计器
-designer = AntimicrobialDesigner(
-    model_path="./models/esm2_diffusion_mamba.pt",
-    device="cuda" if torch.cuda.is_available() else "cpu"
-)
-
-# 输入原始LL-37序列
-original_sequence = "LLGDFFRKSKEKIGKEFKRIVQRIKDFLRNLVPRTES"
-
-# 设计优化变体
-optimized_variants = designer.optimize(
-    sequence=original_sequence,
-    target_properties={
-        "antimicrobial_activity": 0.8,  # 提升抗菌活性
-        "cytotoxicity": 0.2,           # 降低细胞毒性
-        "stability": 0.7               # 增强稳定性
-    },
-    num_variants=5,
-    optimization_steps=100
-)
-
-# 输出结果
-for i, variant in enumerate(optimized_variants):
-    print(f"变体 {i+1}: {variant.sequence}")
-    print(f"预测活性: {variant.antimicrobial_score:.3f}")
-    print(f"预测毒性: {variant.toxicity_score:.3f}")
-    print(f"预测稳定性: {variant.stability_score:.3f}")
-    print("-" * 50)</pre>
-                </div>
             </div>
         </div>
     </section>
@@ -805,15 +753,15 @@ for i, variant in enumerate(optimized_variants):
                         <i class="fas fa-arrow-left"></i>
                     </div>
                     <div class="nav-text">
-                        <div class="nav-title">项目概览</div>
-                        <div class="nav-desc">了解项目背景与动机</div>
+                        <div class="nav-title">Project Overview</div>
+                        <div class="nav-desc">Learn about project background</div>
                     </div>
                 </a>
 
                 <a href="results.html" class="nav-link">
                     <div class="nav-text">
-                        <div class="nav-title">研究成果</div>
-                        <div class="nav-desc">查看实验结果与验证</div>
+                        <div class="nav-title">Research Results</div>
+                        <div class="nav-desc">View experimental results and validation</div>
                     </div>
                     <div class="nav-icon">
                         <i class="fas fa-arrow-right"></i>
@@ -842,7 +790,7 @@ for i, variant in enumerate(optimized_variants):
                 type: 'scatter',
                 data: {
                     datasets: [{
-                        label: '传统方法',
+                        label: 'Traditional Methods',
                         data: [
                             {x: 60, y: 24},
                             {x: 65, y: 36},
@@ -851,7 +799,7 @@ for i, variant in enumerate(optimized_variants):
                         backgroundColor: 'rgba(255, 99, 132, 0.6)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                     }, {
-                        label: '其他AI方法',
+                        label: 'Other AI Methods',
                         data: [
                             {x: 72, y: 12},
                             {x: 75, y: 18},
@@ -860,7 +808,7 @@ for i, variant in enumerate(optimized_variants):
                         backgroundColor: 'rgba(54, 162, 235, 0.6)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                     }, {
-                        label: 'Diffusion-RL',
+                        label: 'CytoFlow Framework',
                         data: [
                             {x: 85, y: 2.3},
                             {x: 87, y: 2.1},
@@ -877,7 +825,7 @@ for i, variant in enumerate(optimized_variants):
                     plugins: {
                         title: {
                             display: true,
-                            text: '抗菌活性准确率 vs 计算时间'
+                            text: 'Antimicrobial Activity Accuracy vs Computation Time'
                         },
                         legend: {
                             position: 'top',
@@ -888,7 +836,7 @@ for i, variant in enumerate(optimized_variants):
                             display: true,
                             title: {
                                 display: true,
-                                text: '预测准确率 (%)'
+                                text: 'Prediction Accuracy (%)'
                             },
                             min: 50,
                             max: 95
@@ -897,7 +845,7 @@ for i, variant in enumerate(optimized_variants):
                             display: true,
                             title: {
                                 display: true,
-                                text: '计算时间 (秒)'
+                                text: 'Computation Time (seconds)'
                             },
                             min: 0,
                             max: 50
@@ -938,20 +886,20 @@ for i, variant in enumerate(optimized_variants):
                 
                 output.innerHTML = `
                     <div class="output-result">
-                        <h4 style="margin-bottom: 1rem; color: #2c3e50;">🎉 设计完成！</h4>
+                        <h4 style="margin-bottom: 1rem; color: #2c3e50;">🎉 Design Complete!</h4>
                         <div style="text-align: left; max-width: 600px; margin: 0 auto;">
-                            <p><strong>原始序列:</strong><br>
+                            <p><strong>Original Sequence:</strong><br>
                             <code style="background: #f1f3f5; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem; word-break: break-all;">${results.original}</code></p>
-                            
-                            <p><strong>优化序列:</strong><br>
+
+                            <p><strong>Optimized Sequence:</strong><br>
                             <code style="background: #e8f5e8; padding: 0.5rem; border-radius: 4px; font-size: 0.9rem; word-break: break-all;">${results.optimized}</code></p>
-                            
+
                             <div style="margin-top: 1rem;">
-                                <strong>预测改进:</strong>
+                                <strong>Predicted Improvements:</strong>
                                 <ul style="margin-top: 0.5rem;">
-                                    <li>抗菌活性提升: <span style="color: #27ae60; font-weight: bold;">${results.improvements.antimicrobial.toFixed(1)}%</span></li>
-                                    <li>稳定性增强: <span style="color: #27ae60; font-weight: bold;">${results.improvements.stability.toFixed(1)}%</span></li>
-                                    <li>毒性降低: <span style="color: #27ae60; font-weight: bold;">${results.improvements.toxicity_reduction.toFixed(1)}%</span></li>
+                                    <li>Antimicrobial Activity: <span style="color: #27ae60; font-weight: bold;">+${results.improvements.antimicrobial.toFixed(1)}%</span></li>
+                                    <li>Stability Enhancement: <span style="color: #27ae60; font-weight: bold;">+${results.improvements.stability.toFixed(1)}%</span></li>
+                                    <li>Toxicity Reduction: <span style="color: #27ae60; font-weight: bold;">-${results.improvements.toxicity_reduction.toFixed(1)}%</span></li>
                                 </ul>
                             </div>
                         </div>

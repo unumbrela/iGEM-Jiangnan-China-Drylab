@@ -1,19 +1,72 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>江南大学 iGEM 2025 - Diffusion-RL 抗菌肽设计</title>
-    
+    <title>Jiangnan University iGEM 2025 - CytoFlow Framework</title>
+
     <!-- SEO Meta Tags -->
-    <meta name="description" content="江南大学iGEM团队开发Diffusion-RL抗菌肽AI设计流程，抗菌活性提升60%">
-    <meta name="keywords" content="iGEM,抗菌肽,人工智能,ESM2,Diffusion,Mamba,江南大学,合成生物学">
-    
+    <meta name="description" content="Jiangnan iGEM team developed CytoFlow framework for antimicrobial peptide design with 25%+ biomass improvement">
+    <meta name="keywords" content="iGEM,antimicrobial peptides,artificial intelligence,CytoFlow,protein language models,Jiangnan University,synthetic biology">
+
     <!-- Open Graph -->
-    <meta property="og:title" content="江南大学iGEM - Diffusion-RL抗菌肽设计">
-    <meta property="og:description" content="专门针对抗菌肽优化的AI设计流程">
+    <meta property="og:title" content="Jiangnan iGEM - CytoFlow Framework">
+    <meta property="og:description" content="AI-driven pipeline from fermentation optimization to sequence evolution">
     <meta property="og:type" content="website">
     
+    <script>
+ window.difyChatbotConfig = {
+  token: 'dsdG2KaGyTEqBy7o',
+  inputs: {
+    // You can define the inputs from the Start node here
+    // key is the variable name
+    // e.g.
+    // name: "NAME"
+  },
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
+  userVariables: {
+    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+    // name: 'YOU CAN DEFINE USER NAME HERE',
+  },
+ }
+</script>
+<script>
+  window.difyChatbotConfig = {
+    token: 'dsdG2KaGyTEqBy7o',
+    inputs: {
+      // You can define the inputs from the Start node here
+      // key is the variable name
+      // e.g.
+      // name: "NAME"
+    },
+    systemVariables: {
+      // user_id: 'YOU CAN DEFINE USER ID HERE',
+      // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+    },
+    userVariables: {
+      // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+      // name: 'YOU CAN DEFINE USER NAME HERE',
+    },
+  }
+</script>
+<script
+  src="https://udify.app/embed.min.js"
+  id="dsdG2KaGyTEqBy7o"
+  defer>
+</script>
+<style>
+  #dify-chatbot-bubble-button {
+    background-color: #1C64F2 !important;
+  }
+  #dify-chatbot-bubble-window {
+    width: 24rem !important;
+    height: 40rem !important;
+  }
+</style>
+
     <!-- External Libraries -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
@@ -642,12 +695,12 @@
         <div class="nav-container">
             <a href="#" class="logo">iGEM Jiangnan-China-Drylab</a>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#" class="nav-link active">首页</a></li>
-                <li><a href="pages/overview.html" class="nav-link">项目概览</a></li>
-                <li><a href="pages/technology.html" class="nav-link">技术架构</a></li>
-                <li><a href="pages/results.html" class="nav-link">研究成果</a></li>
-                <li><a href="pages/impact.html" class="nav-link">社会影响</a></li> <li><a href="pages/team.html" class="nav-link">团队介绍</a></li>
-                <li><a href="https://github.com/your-team/Diffusion-RL" class="nav-link" target="_blank">
+                <li><a href="#" class="nav-link active">Home</a></li>
+                <li><a href="pages/overview.html" class="nav-link">Overview</a></li>
+                <li><a href="pages/technology.html" class="nav-link">Technology</a></li>
+                <li><a href="pages/results.html" class="nav-link">Results</a></li>
+                <li><a href="pages/impact.html" class="nav-link">Impact</a></li>
+                <li><a href="https://github.com/unumbrela/igem-jiangnan-china" class="nav-link" target="_blank">
                     <i class="fab fa-github"></i> GitHub
                 </a></li>
             </ul>
@@ -673,19 +726,19 @@
             <div class="hero-badge">
                 🏆 iGEM 2025 Competition Project
             </div>
-            <h1>Diffusion-RL</h1>
+            <h1>CytoFlow</h1>
             <p class="hero-subtitle">
-                专门针对抗菌肽优化的AI设计流程<br>
-                将蛋白质设计从传统经验试错提升为精准智能设计
+                AI-Driven Pipeline for Antimicrobial Peptide Design<br>
+                From Fermentation Optimization to Sequence Evolution
             </p>
             <div class="hero-buttons">
                 <a href="pages/overview.html" class="btn btn-primary">
                     <i class="fas fa-rocket"></i>
-                    探索项目
+                    Explore Project
                 </a>
                 <a href="pages/technology.html" class="btn btn-outline">
                     <i class="fas fa-cogs"></i>
-                    技术详情
+                    Technology Details
                 </a>
             </div>
         </div>
@@ -695,75 +748,64 @@
     <section class="quick-nav">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">项目亮点</h2>
+                <h2 class="section-title">Project Highlights</h2>
                 <p class="section-subtitle">
-                    深入了解我们如何通过AI技术革新抗菌肽设计
+                    Explore how we revolutionize antimicrobial peptide design through AI technology
                 </p>
             </div>
             <div class="nav-cards">
                 <a href="pages/overview.html" class="nav-card" data-aos="fade-up" data-aos-delay="100">
                     <div class="card-icon">🎯</div>
-                    <h3 class="card-title">项目概览</h3>
+                    <h3 class="card-title">Project Overview</h3>
                     <p class="card-description">
-                        了解抗生素耐药危机背景、LL-37抗菌肽局限性，以及我们的AI解决方案创新点
+                        Understanding antibiotic resistance crisis, LL-37 limitations, and our innovative AI solution
                     </p>
                     <span class="card-link">
-                        查看详情 <i class="fas fa-arrow-right"></i>
+                        Learn More <i class="fas fa-arrow-right"></i>
                     </span>
                 </a>
 
                 <a href="pages/technology.html" class="nav-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="card-icon">🤖</div>
-                    <h3 class="card-title">AI技术架构</h3>
+                    <h3 class="card-title">CytoFlow Framework</h3>
                     <p class="card-description">
-                        深入Diffusion-RL三模块协同工作流程，了解技术优势与生物学约束整合
+                        Three integrated models: CytoGrow for fermentation, CytoGuard for activity prediction, CytoEvolve for sequence evolution
                     </p>
                     <span class="card-link">
-                        技术详情 <i class="fas fa-arrow-right"></i>
+                        Technical Details <i class="fas fa-arrow-right"></i>
                     </span>
                 </a>
 
                 <a href="pages/results.html" class="nav-card" data-aos="fade-up" data-aos-delay="300">
                     <div class="card-icon">📊</div>
-                    <h3 class="card-title">研究成果</h3>
+                    <h3 class="card-title">Research Results</h3>
                     <p class="card-description">
-                        查看AI设计变体的性能数据、抗菌活性提升60%的验证结果和多维度评估
+                        25%+ yeast biomass improvement and comprehensive validation of improved LL-37 variants
                     </p>
                     <span class="card-link">
-                        查看成果 <i class="fas fa-arrow-right"></i>
+                        View Results <i class="fas fa-arrow-right"></i>
                     </span>
                 </a>
 
-                <a href="pages/integration.html" class="nav-card" data-aos="fade-up" data-aos-delay="400">
+                <a href="pages/technology.html" class="nav-card" data-aos="fade-up" data-aos-delay="400">
                     <div class="card-icon">🔬</div>
-                    <h3 class="card-title">湿干实验整合</h3>
+                    <h3 class="card-title">Wet-Dry Lab Integration</h3>
                     <p class="card-description">
-                        探索DBTL循环实施、跨学科协作流程，以及AI辅助的效率提升案例
+                        DBTL cycle implementation, interdisciplinary collaboration, and AI-enhanced efficiency
                     </p>
                     <span class="card-link">
-                        了解更多 <i class="fas fa-arrow-right"></i>
+                        Learn More <i class="fas fa-arrow-right"></i>
                     </span>
                 </a>
 
                 <a href="pages/impact.html" class="nav-card" data-aos="fade-up" data-aos-delay="500">
                     <div class="card-icon">🌍</div>
-                    <h3 class="card-title">社会影响</h3>
+                    <h3 class="card-title">Social Impact</h3>
                     <p class="card-description">
-                        了解临床应用前景、开源贡献、知识传播成果，以及可持续发展愿景
+                        Clinical applications, open-source contributions, and sustainable development vision
                     </p>
                     <span class="card-link">
-                        社会价值 <i class="fas fa-arrow-right"></i>
-                    </span>
-                </a>
-
-                <a href="pages/team.html" class="nav-card" data-aos="fade-up" data-aos-delay="600">
-                    <div class="card-icon">👥</div>
-                    <h3 class="card-title">团队介绍</h3>
-                    <p class="card-description">
-                        认识我们的跨学科团队成员、导师团队，以及团队协作和成长历程
-                    </p>
-                    <span class="card-link">
-                        认识团队 <i class="fas fa-arrow-right"></i>
+                        Social Value <i class="fas fa-arrow-right"></i>
                     </span>
                 </a>
             </div>
@@ -774,25 +816,25 @@
     <section class="stats-section">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2 class="section-title">项目成果数据</h2>
-                <p class="section-subtitle">用数据展示我们的创新突破</p>
+                <h2 class="section-title">Project Achievements</h2>
+                <p class="section-subtitle">Demonstrating our innovation through data</p>
             </div>
             <div class="stats-grid">
                 <div class="stat-card" data-aos="zoom-in" data-aos-delay="100">
-                    <span class="stat-number" data-count="40">0</span>
-                    <span class="stat-label">抗菌活性提升 %</span>
+                    <span class="stat-number" data-count="25">0</span>
+                    <span class="stat-label">Biomass Improvement %+</span>
                 </div>
                 <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
-                    <span class="stat-number" data-count="85">0</span>
-                    <span class="stat-label">预测准确性 %</span>
+                    <span class="stat-number" data-count="3">0</span>
+                    <span class="stat-label">Protein Language Models</span>
                 </div>
                 <div class="stat-card" data-aos="zoom-in" data-aos-delay="300">
                     <span class="stat-number" data-count="3">0</span>
-                    <span class="stat-label">AI模块融合</span>
+                    <span class="stat-label">AI Models Integrated</span>
                 </div>
                 <div class="stat-card" data-aos="zoom-in" data-aos-delay="400">
                     <span class="stat-number" data-count="100">0</span>
-                    <span class="stat-label">开源共享 %</span>
+                    <span class="stat-label">Open Source %</span>
                 </div>
             </div>
         </div>
@@ -802,18 +844,18 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content" data-aos="fade-up">
-                <h2 class="cta-title">开启抗菌肽设计新时代</h2>
+                <h2 class="cta-title">Pioneering the Future of Peptide Design</h2>
                 <p class="cta-subtitle">
-                    加入我们，共同推动AI驱动的生物医学创新
+                    Join us in advancing AI-driven biomedical innovation
                 </p>
                 <div class="hero-buttons">
-                    <a href="https://github.com/your-team/Diffusion-RL" class="btn btn-outline" target="_blank">
+                    <a href="https://github.com/unumbrela/igem-jiangnan-china" class="btn btn-outline" target="_blank">
                         <i class="fab fa-github"></i>
-                        访问 GitHub
+                        Visit GitHub
                     </a>
                     <a href="pages/overview.html" class="btn btn-primary">
                         <i class="fas fa-play"></i>
-                        开始探索
+                        Start Exploring
                     </a>
                 </div>
             </div>
@@ -825,53 +867,53 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>联系我们</h3>
+                    <h3>Contact Us</h3>
                     <a href="mailto:zihao3351@gmail.com">
                         <i class="fas fa-envelope"></i> zihao3351@gmail.com
                     </a>
                     <a href="https://jiangnan.edu.cn/">
-                        <i class="fas fa-map-marker-alt"></i> 江苏省无锡市蠡湖大道1800号
+                        <i class="fas fa-map-marker-alt"></i> 1800 Lihu Avenue, Wuxi, Jiangsu, China
                     </a>
                     <a href="#">
                         <i class="fas fa-phone"></i> 510-85327307
                     </a>
                 </div>
                 <div class="footer-section">
-                    <h3>快速链接</h3>
-                    <a href="pages/overview.html">项目概览</a>
-                    <a href="pages/technology.html">技术架构</a>
-                    <a href="pages/results.html">研究成果</a>
-                    <a href="pages/impact.html">社会影响</a> <a href="pages/team.html">团队介绍</a>
+                    <h3>Quick Links</h3>
+                    <a href="pages/overview.html">Overview</a>
+                    <a href="pages/technology.html">Technology</a>
+                    <a href="pages/results.html">Results</a>
+                    <a href="pages/impact.html">Impact</a>
                 </div>
                 <div class="footer-section">
-                    <h3>资源下载</h3>
+                    <h3>Resources</h3>
                     <a href="https://github.com/unumbrela/igem-jiangnan-china" target="_blank">
-                        <i class="fab fa-github"></i> GitHub 仓库
+                        <i class="fab fa-github"></i> GitHub Repository
                     </a>
                     <a href="#">
-                        <i class="fas fa-file-pdf"></i> 技术文档
+                        <i class="fas fa-file-pdf"></i> Documentation
                     </a>
                     <a href="#">
-                        <i class="fas fa-database"></i> 数据集
+                        <i class="fas fa-database"></i> Datasets
                     </a>
                 </div>
                 <div class="footer-section">
-                    <h3>关注我们</h3>
+                    <h3>Follow Us</h3>
                     <a href="#">
-                        <i class="fab fa-weixin"></i> 微信公众号
+                        <i class="fab fa-weixin"></i> WeChat
                     </a>
                     <a href="#">
-                        <i class="fab fa-zhihu"></i> 知乎专栏
+                        <i class="fab fa-zhihu"></i> Zhihu
                     </a>
                     <a href="#">
-                        <i class="fab fa-bilibili"></i> B站频道
+                        <i class="fab fa-bilibili"></i> Bilibili
                     </a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 江南大学 iGEM 团队. 保留所有权利. | 
-                   <a href="#" style="color: #95a5a6;">隐私政策</a> | 
-                   <a href="#" style="color: #95a5a6;">使用条款</a>
+                <p>&copy; 2025 Jiangnan University iGEM Team. All rights reserved. |
+                   <a href="#" style="color: #95a5a6;">Privacy Policy</a> |
+                   <a href="#" style="color: #95a5a6;">Terms of Use</a>
                 </p>
             </div>
         </div>
@@ -1147,7 +1189,7 @@
                 // Easter egg: Add special effect
                 document.body.style.animation = 'pulse 0.5s ease-in-out 3';
                 setTimeout(() => {
-                    alert('🎉 恭喜发现彩蛋！iGEM团队为您点赞！');
+                    alert('🎉 Congratulations! You found the easter egg! iGEM Team salutes you!');
                 }, 1500);
                 konamiCode = [];
             }
